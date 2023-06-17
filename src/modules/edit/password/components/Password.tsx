@@ -13,7 +13,6 @@ import {
   Paper,
   Toolbar,
   Grid,
-  Chip,
   Container,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -24,7 +23,6 @@ import {
 } from '@material-ui/icons'
 
 import * as actions from '../actions'
-import { isLoginAsAdmin, isLoginAsUser } from 'utils/isLogin'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -67,15 +65,6 @@ export default function Password() {
     showNewPassword: false,
     showConfirmPassword: false,
   })
-
-  const isAdmin = isLoginAsAdmin()
-  const isUser = isLoginAsUser()
-
-  const getRoleLabel = () => {
-    if (isAdmin) return 'หัวหน้างาน'
-    else if (isUser) return 'ผู้ปฏิบัติงาน'
-    else return ''
-  }
 
   const handleChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,13 +158,6 @@ export default function Password() {
               >
                 เปลี่ยนรหัสผ่าน
               </Typography>
-              <Chip
-                label={getRoleLabel()}
-                color={isAdmin ? 'secondary' : 'primary'}
-                size='small'
-                variant='outlined'
-                style={{ marginBottom: 16, fontWeight: 500 }}
-              />
             </Grid>
             <form className={classes.form} noValidate>
               <TextField

@@ -16,7 +16,6 @@ import { MeetingRoom as LogoutIcon, Lock as LockIcon } from '@material-ui/icons'
 import { grey } from '@material-ui/core/colors'
 
 import { getCookie } from 'utils/cookies'
-import { isLoginAsAdmin, isLoginAsUser } from 'utils/isLogin'
 
 interface NavDropdownMobileProps {
   isLoggedIn: boolean
@@ -68,23 +67,12 @@ export default function NavDropdownMobile({
   usernameLabel,
 }: NavDropdownMobileProps) {
   const classes = useStyles()
-  const isAdmin = isLoginAsAdmin()
-  const isUser = isLoginAsUser()
 
   const fullnameLabel = `${
     getCookie('firstname') ? getCookie('firstname') : ''
   } ${getCookie('lastname') ? getCookie('lastname') : ''}`
 
-  const getRoleLabel = () => {
-    if (isAdmin) return 'หัวหน้างาน'
-    else if (isUser) return 'ผู้ปฏิบัติงาน'
-    else return ''
-  }
-
-  const getAvatarClassName = () => {
-    if (isAdmin) return classes.loggedInAsAdmin
-    else if (isUser) return classes.loggedIn
-  }
+  const workplaceLabel = getCookie('workplace') ? getCookie('workplace') : ''
 
   return (
     <Menu
@@ -98,7 +86,7 @@ export default function NavDropdownMobile({
     >
       <ListItem dense>
         <ListItemIcon color='inherit'>
-          <Avatar className={getAvatarClassName()} />
+          <Avatar className={classes.loggedIn} />
         </ListItemIcon>
         <ListItemText
           className={classes.bold}
@@ -108,8 +96,12 @@ export default function NavDropdownMobile({
             </Typography>
           }
           secondary={
-            <Typography variant='body2' color='textSecondary'>
-              {getRoleLabel()}
+            <Typography
+              variant='body2'
+              color='textSecondary'
+              style={{ maxWidth: 200, marginTop: 4 }}
+            >
+              {workplaceLabel}
             </Typography>
           }
         />

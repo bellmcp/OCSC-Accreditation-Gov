@@ -2,7 +2,6 @@ import axios from 'axios'
 import { get } from 'lodash'
 import { getCookie } from 'utils/cookies'
 import * as uiActions from 'modules/ui/actions'
-import { isLoginAsAdmin } from 'utils/isLogin'
 
 const CHANGE_PASSWORD_REQUEST =
   'ocsc-person-accredit/edit/password/CHANGE_PASSWORD_REQUEST'
@@ -23,11 +22,10 @@ function changePassword(submitValues: any) {
   return async (dispatch: any) => {
     dispatch({ type: CHANGE_PASSWORD_REQUEST })
     try {
-      const isAdmin = isLoginAsAdmin()
       const token = getCookie('token')
       const id = getCookie('id')
 
-      const path = isAdmin ? `/Supervisors/${id}` : `/Workers/${id}`
+      const path = `/Supervisors/${id}`
       const baseURL = process.env.REACT_APP_API_URL
 
       const result = await axios.patch(path, submitValues, {

@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 interface State {
   password: string
   showPassword: boolean
-  email: string
+  userid: string
 }
 
 export default function Login() {
@@ -59,7 +59,7 @@ export default function Login() {
   const [values, setValues] = useState({
     password: '',
     showPassword: false,
-    email: '',
+    userid: '',
   })
 
   const { messageLogin } = useSelector((state: any) => state.login)
@@ -82,29 +82,18 @@ export default function Login() {
   const { register, handleSubmit, errors } = useForm({
     mode: 'onSubmit',
     validationSchema: yup.object().shape({
-      email: yup.string().required(''),
+      userid: yup.string().required(''),
       password: yup.string().required(),
     }),
   })
 
-  const onLoginWorker = (loginInfo: any) => {
+  const onLogin = (loginInfo: any) => {
     const actionLogin = actions.loadLogin(
       {
-        userid: loginInfo.email,
+        userid: loginInfo.userid,
         password: loginInfo.password,
       },
-      'worker'
-    )
-    dispatch(actionLogin)
-  }
-
-  const onLoginSupervisor = (loginInfo: any) => {
-    const actionLogin = actions.loadLogin(
-      {
-        userid: loginInfo.email,
-        password: loginInfo.password,
-      },
-      'supervisor'
+      'agency'
     )
     dispatch(actionLogin)
   }
@@ -123,14 +112,13 @@ export default function Login() {
             >
               <Typography
                 component='h1'
-                variant='h4'
+                variant='h5'
                 align='center'
                 color='secondary'
                 style={{ fontWeight: 600, marginBottom: 16 }}
               >
-                กลุ่มงานรับรองคุณวุฒิ
-                <br />
-                สำนักงาน ก.พ.
+                ระบบการพิจารณาการรับรองคุณวุฒิด้วยระบบอิเล็กทรอนิกส์
+                (สำหรับส่วนราชการ)
               </Typography>
             </Grid>
             <Typography
@@ -145,11 +133,13 @@ export default function Login() {
                 required
                 fullWidth
                 inputRef={register}
-                label='อีเมล'
-                name='email'
+                label='เลขประจำตัวประชาชน'
+                name='userid'
                 autoComplete='on'
-                helperText={errors.email ? 'กรุณากรอกอีเมล' : null}
-                error={!!errors.email}
+                helperText={
+                  errors.userid ? 'กรุณากรอกเลขประจำตัวประชาชน' : null
+                }
+                error={!!errors.userid}
                 style={{ letterSpacing: ' 0.05em' }}
                 InputProps={{
                   startAdornment: (
@@ -158,8 +148,8 @@ export default function Login() {
                     </InputAdornment>
                   ),
                 }}
-                value={values.email}
-                onChange={handleChange('email')}
+                value={values.userid}
+                onChange={handleChange('userid')}
               />
               <TextField
                 variant='outlined'
@@ -207,23 +197,13 @@ export default function Login() {
               <Button
                 size='large'
                 color='secondary'
-                variant='outlined'
+                variant='contained'
                 className={classes.submit}
                 fullWidth
                 type='submit'
-                onClick={handleSubmit(onLoginWorker)}
+                onClick={handleSubmit(onLogin)}
               >
-                <b style={{ marginRight: 8 }}>เข้าสู่ระบบ</b> (ผู้ปฏิบัติงาน)
-              </Button>
-              <Button
-                size='large'
-                color='secondary'
-                variant='contained'
-                fullWidth
-                type='submit'
-                onClick={handleSubmit(onLoginSupervisor)}
-              >
-                <b style={{ marginRight: 8 }}>เข้าสู่ระบบ</b> (หัวหน้างาน)
+                <b style={{ marginRight: 8 }}>เข้าสู่ระบบ</b>
               </Button>
             </form>
           </Paper>

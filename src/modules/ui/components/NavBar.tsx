@@ -38,7 +38,7 @@ import NavDropdownMobile from './NavDropdownMobile'
 import NavDropdownDesktop from './NavDropdownDesktop'
 
 import * as uiActions from 'modules/ui/actions'
-import { isLoginAsAdmin, isLoginAsUser } from 'utils/isLogin'
+import { isLogin } from 'utils/isLogin'
 import {
   mainItems,
   searchItems,
@@ -220,13 +220,7 @@ export default function NavBar({
   const menuId = 'primary-account-menu'
   const mobileMenuId = 'primary-account-menu-mobile'
 
-  const isAdmin = isLoginAsAdmin()
-  const isUser = isLoginAsUser()
-
-  const checkIsLoggedIn = () => {
-    return isAdmin || isUser
-  }
-  const isLoggedIn = checkIsLoggedIn()
+  const isLoggedIn = isLogin()
 
   const getUsernameLabel = () => {
     if (isLoggedIn) return getCookie('firstname')
@@ -235,8 +229,7 @@ export default function NavBar({
   const usernameLabel = getUsernameLabel()
 
   const getAvatarClassName = () => {
-    if (isAdmin) return classes.loggedInAsAdmin
-    else if (isUser) return classes.loggedIn
+    if (isLoggedIn) return classes.loggedIn
     else return classes.small
   }
 
@@ -302,6 +295,7 @@ export default function NavBar({
     eraseCookie('firstname')
     eraseCookie('lastname')
     eraseCookie('id')
+    eraseCookie('workplace')
     dispatch(uiActions.setFlashMessage('ออกจากระบบเรียบร้อยแล้ว', 'success'))
     setTimeout(() => {
       history.push(`${PATH}/login`)
