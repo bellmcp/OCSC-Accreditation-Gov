@@ -32,20 +32,13 @@ import { NavMenu, NavItem } from '@mui-treasury/components/menu/navigation'
 import { useLineNavigationMenuStyles } from '@mui-treasury/styles/navigationMenu/line'
 import { usePopupState } from 'material-ui-popup-state/hooks'
 import NavDrawer from './NavDrawer'
-import PopUpMenu from './PopUpMenu'
 import PopUpMenuDropdown from './PopUpMenuDropdown'
 import NavDropdownMobile from './NavDropdownMobile'
 import NavDropdownDesktop from './NavDropdownDesktop'
 
 import * as uiActions from 'modules/ui/actions'
 import { isLogin } from 'utils/isLogin'
-import {
-  mainItems,
-  searchItems,
-  menuItems,
-  curriculumItems,
-  infoItems,
-} from '../navigation'
+import { navigationItems } from '../navigation'
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -330,64 +323,30 @@ export default function NavBar({
             <div className={classes.grow} />
 
             {/* FULL DESKTOP NAVIGATION */}
-            <Hidden mdDown implementation='css'>
-              <ThemeProvider theme={darkTheme}>
-                <NavMenu
-                  useStyles={useLineNavigationMenuStyles}
-                  color='inherit'
-                  className={classes.navMenu}
-                >
-                  {mainItems.map((item) => (
-                    <NavItem
-                      active={activePage === item.id}
-                      className={
-                        activePage === item.id
-                          ? classes.navItemActive
-                          : classes.navItem
-                      }
-                      onClick={() => {
-                        history.push(item.url)
-                        setActivePage(item.id)
-                      }}
-                    >
-                      <Typography noWrap>{item.title}</Typography>
-                    </NavItem>
-                  ))}
-                  <PopUpMenu
-                    title='ค้นหาการรับรอง'
-                    popUpState={searchPopUpState}
-                  />
-                  <PopUpMenu
-                    title='หนังสือเวียน'
-                    popUpState={curriculumPopUpState}
-                  />
-                  <PopUpMenu
-                    title='ข้อมูลพื้นฐาน'
-                    popUpState={infoPopUpState}
-                  />
-                </NavMenu>
-              </ThemeProvider>
-            </Hidden>
-
-            {/* MEDIUM DESKTOP NAVIGATION */}
-            <Hidden xsDown lgUp implementation='css'>
-              <ThemeProvider theme={darkTheme}>
-                <NavMenu
-                  useStyles={useLineNavigationMenuStyles}
-                  color='inherit'
-                >
-                  <PopUpMenu title='เมนู' popUpState={menuPopUpState} />
-                  <PopUpMenu
-                    title='หนังสือเวียน'
-                    popUpState={curriculumPopUpState}
-                  />
-                  <PopUpMenu
-                    title='ข้อมูลพื้นฐาน'
-                    popUpState={infoPopUpState}
-                  />
-                </NavMenu>
-              </ThemeProvider>
-            </Hidden>
+            <ThemeProvider theme={darkTheme}>
+              <NavMenu
+                useStyles={useLineNavigationMenuStyles}
+                color='inherit'
+                className={classes.navMenu}
+              >
+                {navigationItems.map((item) => (
+                  <NavItem
+                    active={activePage === item.id}
+                    className={
+                      activePage === item.id
+                        ? classes.navItemActive
+                        : classes.navItem
+                    }
+                    onClick={() => {
+                      history.push(item.url)
+                      setActivePage(item.id)
+                    }}
+                  >
+                    <Typography noWrap>{item.title}</Typography>
+                  </NavItem>
+                ))}
+              </NavMenu>
+            </ThemeProvider>
 
             {/* DESKTOP USER DROPDOWN */}
             <div className={classes.sectionDesktop}>
@@ -436,29 +395,11 @@ export default function NavBar({
       <Hidden lgUp implementation='css'>
         <PopUpMenuDropdown
           popUpState={menuPopUpState}
-          menuItems={menuItems}
+          menuItems={navigationItems}
           activePage={activePage}
           setActivePage={setActivePage}
         />
       </Hidden>
-      <PopUpMenuDropdown
-        popUpState={searchPopUpState}
-        menuItems={searchItems}
-        activePage={activePage}
-        setActivePage={setActivePage}
-      />
-      <PopUpMenuDropdown
-        popUpState={curriculumPopUpState}
-        menuItems={curriculumItems}
-        activePage={activePage}
-        setActivePage={setActivePage}
-      />
-      <PopUpMenuDropdown
-        popUpState={infoPopUpState}
-        menuItems={infoItems}
-        activePage={activePage}
-        setActivePage={setActivePage}
-      />
 
       <NavDrawer
         mobileOpen={mobileOpen}

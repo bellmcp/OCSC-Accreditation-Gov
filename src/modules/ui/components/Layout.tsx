@@ -28,11 +28,9 @@ export default function Layout() {
   const closeFlashMessage = () => dispatch(actions.clearFlashMessage())
 
   useEffect(() => {
-    const currentNavigationItem = navigationItems.find(
-      (navigationItem: any) => {
-        return navigationItem.url === pathname
-      }
-    )
+    const currentNavigationItem = navigationItems.find((navigationItem: any) => {
+      return navigationItem.url === pathname
+    })
     currentNavigationItem
       ? setActivePage(currentNavigationItem.id)
       : setActivePage(999)
