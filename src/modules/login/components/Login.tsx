@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -14,6 +14,8 @@ import {
   Toolbar,
   Grid,
   Container,
+  Box,
+  Divider,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -21,6 +23,7 @@ import {
   Lock as LockIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
+  ArrowForwardIos as ArrowForwardIcon,
 } from '@material-ui/icons'
 
 import * as actions from '../actions'
@@ -62,7 +65,11 @@ export default function Login() {
     userid: '',
   })
 
-  const { messageLogin } = useSelector((state: any) => state.login)
+  const {
+    messageLogin,
+    forgetPasswordUrl = '',
+    registrationUrl = '',
+  } = useSelector((state: any) => state.login)
 
   const handleChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +104,18 @@ export default function Login() {
     )
     dispatch(actionLogin)
   }
+
+  const linkToForgotPassword = () => {
+    window.open(forgetPasswordUrl, '_blank')
+  }
+
+  const linkToSignUp = () => {
+    window.open(registrationUrl, '_blank')
+  }
+
+  useEffect(() => {
+    dispatch(actions.loadLoginLink())
+  }, [dispatch])
 
   return (
     <Container maxWidth='lg'>
@@ -188,6 +207,13 @@ export default function Login() {
                 value={values.password}
                 onChange={handleChange('password')}
               />
+              <Button
+                color='secondary'
+                onClick={linkToForgotPassword}
+                disabled={forgetPasswordUrl === ''}
+              >
+                ลืมรหัสผ่าน
+              </Button>
               <FormHelperText
                 error
                 style={{ fontSize: '0.9rem', textAlign: 'center' }}
@@ -203,9 +229,28 @@ export default function Login() {
                 type='submit'
                 onClick={handleSubmit(onLogin)}
               >
-                <b style={{ marginRight: 8 }}>เข้าสู่ระบบ</b>
+                <b>เข้าสู่ระบบ</b>
               </Button>
             </form>
+            <Box mt={4}>
+              <Divider />
+            </Box>
+            <Box my={3}>
+              <Grid container justify='space-between' alignItems='center'>
+                <Typography variant='body2' color='textPrimary'>
+                  ยังไม่มีบัญชีใช่ไหม?
+                </Typography>
+                <Button
+                  onClick={linkToSignUp}
+                  variant='text'
+                  color='secondary'
+                  endIcon={<ArrowForwardIcon />}
+                  disabled={registrationUrl === ''}
+                >
+                  สมัครสมาชิก
+                </Button>
+              </Grid>
+            </Box>
           </Paper>
         </Grid>
       </Grid>

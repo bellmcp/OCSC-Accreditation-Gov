@@ -8,6 +8,12 @@ import * as uiActions from 'modules/ui/actions'
 const LOAD_LOGIN_REQUEST = 'ocsc-person-accredit/login/LOAD_LOGIN_REQUEST'
 const LOAD_LOGIN_SUCCESS = 'ocsc-person-accredit/login/LOAD_LOGIN_SUCCESS'
 const LOAD_LOGIN_FAILURE = 'ocsc-person-accredit/login/LOAD_LOGIN_FAILURE'
+const LOAD_LOGIN_LINK_REQUEST =
+  'ocsc-person-accredit/login/LOAD_LOGIN_LINK_REQUEST'
+const LOAD_LOGIN_LINK_SUCCESS =
+  'ocsc-person-accredit/login/LOAD_LOGIN_LINK_SUCCESS'
+const LOAD_LOGIN_LINK_FAILURE =
+  'ocsc-person-accredit/login/LOAD_LOGIN_LINK_FAILURE'
 const CLEAR_MESSAGE_LOGIN = 'ocsc-person-accredit/login/CLEAR_MESSAGE_LOGIN'
 
 const PATH = process.env.REACT_APP_BASE_PATH
@@ -104,11 +110,50 @@ function loadLogin(userInfo: any, role: string) {
   }
 }
 
+function loadLoginLink() {
+  return async (dispatch: any) => {
+    dispatch({ type: LOAD_LOGIN_LINK_REQUEST })
+    try {
+      const res1 = await axios.get('/forgetpasswordurl', {
+        baseURL: process.env.REACT_APP_PORTAL_API_URL,
+      })
+      const res2 = await axios.get('/registrationurl', {
+        baseURL: process.env.REACT_APP_PORTAL_API_URL,
+      })
+      dispatch({
+        type: LOAD_LOGIN_LINK_SUCCESS,
+        payload: {
+          forgetPasswordUrl: get(res1, 'data.url', ''),
+          registrationUrl: get(res2, 'data.url', ''),
+        },
+      })
+    } catch (err) {
+      dispatch({
+        type: LOAD_LOGIN_LINK_FAILURE,
+      })
+      dispatch(
+        uiActions.setFlashMessage(
+          `โหลดข้อมูลลิงก์เข้าสู่ระบบไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+            err,
+            'response.status',
+            'บางอย่าง'
+          )}`,
+          'error'
+        )
+      )
+    }
+  }
+}
+
 export {
   LOAD_LOGIN_REQUEST,
   LOAD_LOGIN_SUCCESS,
   LOAD_LOGIN_FAILURE,
   CLEAR_MESSAGE_LOGIN,
+  LOAD_LOGIN_LINK_REQUEST,
+  LOAD_LOGIN_LINK_SUCCESS,
+  LOAD_LOGIN_LINK_FAILURE,
   loadLogin,
   clearMessageLogin,
+  loadLoginLink,
 }
