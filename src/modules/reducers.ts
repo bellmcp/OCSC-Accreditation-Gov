@@ -4,6 +4,7 @@ import { loadingBarReducer } from 'react-redux-loading-bar'
 
 import uiReducer from 'modules/ui/reducer'
 import loginReducer from 'modules/login/reducer'
+import homeReducer from 'modules/home/reducer'
 import searchReducer from 'modules/search/reducer'
 import personLetterReducer from 'modules/personLetter/reducer'
 import infoReducer from 'modules/info/reducer'
@@ -16,6 +17,7 @@ export default (history: any) =>
     loadingBar: loadingBarReducer,
     login: loginReducer,
     ui: uiReducer,
+    home: homeReducer,
     search: searchReducer,
     info: infoReducer,
     personLetter: personLetterReducer,
