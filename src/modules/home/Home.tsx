@@ -18,6 +18,7 @@ import {
   Toolbar,
 } from '@material-ui/core'
 import Stack from '@mui/material/Stack'
+import Loading from 'modules/ui/components/Loading'
 
 import * as homeActions from 'modules/home/actions'
 
@@ -51,9 +52,11 @@ export default function Home() {
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
   const dispatch = useDispatch()
 
-  const { announcement = '', howTo = '' } = useSelector(
-    (state: any) => state.home
-  )
+  const {
+    isLoading = false,
+    announcement = '',
+    howTo = '',
+  } = useSelector((state: any) => state.home)
 
   useEffect(() => {
     dispatch(homeActions.loadHomeContent())
@@ -89,25 +92,29 @@ export default function Home() {
               </Stack>
             </Grid>
           </Grid>
-          <Paper
-            elevation={0}
-            style={{
-              borderRadius: 16,
-              padding: 24,
-              boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
-              border: '1px solid rgb(204 242 251)',
-            }}
-          >
-            {announcement !== '' ? (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: parseLinkToDefaultColor(announcement),
-                }}
-              />
-            ) : (
-              '...'
-            )}
-          </Paper>
+          {isLoading ? (
+            <Loading height={300} />
+          ) : (
+            <Paper
+              elevation={0}
+              style={{
+                borderRadius: 16,
+                padding: 24,
+                boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+                border: '1px solid rgb(204 242 251)',
+              }}
+            >
+              {announcement !== '' ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: parseLinkToDefaultColor(announcement),
+                  }}
+                />
+              ) : (
+                'ไม่มีข้อมูล'
+              )}
+            </Paper>
+          )}
         </Box>
         <Box mt={2} mb={4}>
           <Grid
@@ -131,25 +138,29 @@ export default function Home() {
               </Stack>
             </Grid>
           </Grid>
-          <Paper
-            elevation={0}
-            style={{
-              borderRadius: 16,
-              padding: 24,
-              boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
-              border: '1px solid rgb(204 242 251)',
-            }}
-          >
-            {howTo !== '' ? (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: parseLinkToDefaultColor(howTo),
-                }}
-              />
-            ) : (
-              '...'
-            )}
-          </Paper>
+          {isLoading ? (
+            <Loading height={300} />
+          ) : (
+            <Paper
+              elevation={0}
+              style={{
+                borderRadius: 16,
+                padding: 24,
+                boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+                border: '1px solid rgb(204 242 251)',
+              }}
+            >
+              {howTo !== '' ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: parseLinkToDefaultColor(howTo),
+                  }}
+                />
+              ) : (
+                'ไม่มีข้อมูล'
+              )}
+            </Paper>
+          )}
         </Box>
       </Container>
     </>

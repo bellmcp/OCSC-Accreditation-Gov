@@ -9,11 +9,11 @@ export const navigationItems = [
   {
     id: 1,
     title: 'คำร้องขอตรวจสอบคุณวุฒิ',
-    url: `${PATH}/aaa`,
+    url: `${PATH}/request`,
   },
   {
     id: 2,
     title: 'ค้นหาหนังสือรับรองคุณวุฒิ',
-    url: `${PATH}/bbb`,
+    url: `${PATH}/search`,
   },
 ]

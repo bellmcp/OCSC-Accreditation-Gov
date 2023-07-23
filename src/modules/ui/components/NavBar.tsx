@@ -260,18 +260,6 @@ export default function NavBar({
     setMobileOpen(!mobileOpen)
   }
 
-  const infoPopUpState = usePopupState({
-    variant: 'popover',
-    popupId: 'infoPopUp',
-  })
-  const curriculumPopUpState = usePopupState({
-    variant: 'popover',
-    popupId: 'curriculumPopUp',
-  })
-  const searchPopUpState = usePopupState({
-    variant: 'popover',
-    popupId: 'searchPopUp',
-  })
   const menuPopUpState = usePopupState({
     variant: 'popover',
     popupId: 'menuPopUp',
