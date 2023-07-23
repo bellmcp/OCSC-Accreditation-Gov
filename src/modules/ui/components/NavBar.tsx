@@ -135,6 +135,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     sectionDesktop: {
       display: 'none',
+      marginLeft: 16,
       [theme.breakpoints.up('md')]: {
         display: 'flex',
       },

@@ -116,7 +116,7 @@ export default function Home() {
             </Paper>
           )}
         </Box>
-        <Box mt={2} mb={4}>
+        <Box mt={8} mb={4}>
           <Grid
             container
             direction={matches ? 'row' : 'column'}
