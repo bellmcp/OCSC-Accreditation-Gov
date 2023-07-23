@@ -4,19 +4,24 @@ import { getCookie } from 'utils/cookies'
 
 import * as uiActions from 'modules/ui/actions'
 
-const SEARCH_CURRICULUMS_REQUEST =
-  'ocsc-person-accredit/search/SEARCH_CURRICULUMS_REQUEST'
-const SEARCH_CURRICULUMS_SUCCESS =
-  'ocsc-person-accredit/search/SEARCH_CURRICULUMS_SUCCESS'
-const SEARCH_CURRICULUMS_FAILURE =
-  'ocsc-person-accredit/search/SEARCH_CURRICULUMS_FAILURE'
+const SEARCH_PERSON_LETTER_ITEMS_REQUEST =
+  'ocsc-person-accredit/search/SEARCH_PERSON_LETTER_ITEMS_REQUEST'
+const SEARCH_PERSON_LETTER_ITEMS_SUCCESS =
+  'ocsc-person-accredit/search/SEARCH_PERSON_LETTER_ITEMS_SUCCESS'
+const SEARCH_PERSON_LETTER_ITEMS_FAILURE =
+  'ocsc-person-accredit/search/SEARCH_PERSON_LETTER_ITEMS_FAILURE'
 
 const CLEAR_SEARCH_RESULT = 'ocsc-person-accredit/search/CLEAR_SEARCH_RESULT'
 
-function searchCurriculums({ letterNo, letterDate, nationalId, name }: any) {
+function searchPersonLetterItems({
+  letterNo,
+  letterDate,
+  nationalId,
+  name,
+}: any) {
   return async (dispatch: any) => {
     const token = getCookie('token')
-    dispatch({ type: SEARCH_CURRICULUMS_REQUEST })
+    dispatch({ type: SEARCH_PERSON_LETTER_ITEMS_REQUEST })
     try {
       var { data } = await axios.post(
         '/personletteritems/search',
@@ -42,13 +47,13 @@ function searchCurriculums({ letterNo, letterDate, nationalId, name }: any) {
         )
       }
       dispatch({
-        type: SEARCH_CURRICULUMS_SUCCESS,
+        type: SEARCH_PERSON_LETTER_ITEMS_SUCCESS,
         payload: {
           searchResults: data,
         },
       })
     } catch (err) {
-      dispatch({ type: SEARCH_CURRICULUMS_FAILURE })
+      dispatch({ type: SEARCH_PERSON_LETTER_ITEMS_FAILURE })
       dispatch(
         uiActions.setFlashMessage(
           `โหลดผลการค้นหาไม่สำเร็จ เกิดข้อผิดพลาด ${get(
@@ -72,10 +77,10 @@ function clearSearchResult() {
 }
 
 export {
-  SEARCH_CURRICULUMS_REQUEST,
-  SEARCH_CURRICULUMS_SUCCESS,
-  SEARCH_CURRICULUMS_FAILURE,
+  SEARCH_PERSON_LETTER_ITEMS_REQUEST,
+  SEARCH_PERSON_LETTER_ITEMS_SUCCESS,
+  SEARCH_PERSON_LETTER_ITEMS_FAILURE,
   CLEAR_SEARCH_RESULT,
-  searchCurriculums,
+  searchPersonLetterItems,
   clearSearchResult,
 }

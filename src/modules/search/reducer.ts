@@ -1,7 +1,7 @@
 import {
-  SEARCH_CURRICULUMS_REQUEST,
-  SEARCH_CURRICULUMS_SUCCESS,
-  SEARCH_CURRICULUMS_FAILURE,
+  SEARCH_PERSON_LETTER_ITEMS_REQUEST,
+  SEARCH_PERSON_LETTER_ITEMS_SUCCESS,
+  SEARCH_PERSON_LETTER_ITEMS_FAILURE,
   CLEAR_SEARCH_RESULT,
 } from './actions'
 
@@ -16,15 +16,15 @@ const initialState = {
 
 export default function (state = initialState, action: any) {
   switch (action.type) {
-    case SEARCH_CURRICULUMS_REQUEST:
+    case SEARCH_PERSON_LETTER_ITEMS_REQUEST:
       return { ...state, isSearching: true, searchResults: [] }
-    case SEARCH_CURRICULUMS_SUCCESS:
+    case SEARCH_PERSON_LETTER_ITEMS_SUCCESS:
       return {
         ...state,
         isSearching: false,
         searchResults: action.payload.searchResults,
       }
-    case SEARCH_CURRICULUMS_FAILURE:
+    case SEARCH_PERSON_LETTER_ITEMS_FAILURE:
       return { ...state, isSearching: false }
 
     case CLEAR_SEARCH_RESULT:

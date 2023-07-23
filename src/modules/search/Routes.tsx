@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
-import SearchCurriculum from './curriculum/components/SearchCurriculum'
+import SearchCurriculum from './components/SearchPersonLetterItems'
 
 export default function Routes() {
   const { path } = useRouteMatch()

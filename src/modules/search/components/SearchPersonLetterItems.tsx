@@ -91,7 +91,7 @@ function ScrollTop(props: any) {
   )
 }
 
-export default function SearchCurriculum() {
+export default function SearchPersonLetterItems() {
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
@@ -110,7 +110,7 @@ export default function SearchCurriculum() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(
-        searchActions.searchCurriculums({
+        searchActions.searchPersonLetterItems({
           letterNo: get(values, 'letterNo', null),
           letterDate: get(values, 'letterDate', null),
           nationalId: get(values, 'nationalId', null),
@@ -159,7 +159,7 @@ export default function SearchCurriculum() {
 
   const renderSearchResult = () => {
     if (isSearching) {
-      return <Loading height={300}></Loading>
+      return <Loading height={300} />
     } else {
       if (isEmpty(searchResults)) {
         return <></>
