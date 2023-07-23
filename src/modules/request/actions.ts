@@ -167,6 +167,7 @@ function submitForm({
   contact,
   xlsxFile,
   pdfFile,
+  successCallbackFunction,
 }: any) {
   return async (dispatch: any) => {
     const token = getCookie('token')
@@ -192,6 +193,8 @@ function submitForm({
           message: data,
         },
       })
+      dispatch(uiActions.setFlashMessage('ยื่นคำร้องสำเร็จ', 'success'))
+      successCallbackFunction && successCallbackFunction()
     } catch (err) {
       dispatch({ type: SUBMIT_FORM_FAILURE })
       handleApiError(err, dispatch)

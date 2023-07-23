@@ -75,7 +75,12 @@ const parseLinkToDefaultColor = (text: string) => {
   return text.replace(/<a/g, '<a class="html_link"')
 }
 
-export default function CreateModal({ isOpen, onCancel }: any) {
+export default function CreateModal({
+  isOpen,
+  onCancel,
+  submitSearch,
+  searchQuery,
+}: any) {
   const theme = useTheme()
   const dispatch = useDispatch()
   const classes = useStyles()
@@ -129,7 +134,7 @@ export default function CreateModal({ isOpen, onCancel }: any) {
   )
 
   const onResetForm = () => {
-    formik.resetForm()
+    formik.resetForm(formik.initialValues)
     setLetterDate(null)
     setXLSXFile(null)
     setPDFFile(null)
@@ -138,6 +143,11 @@ export default function CreateModal({ isOpen, onCancel }: any) {
   const onCloseModal = () => {
     onResetForm()
     onCancel()
+  }
+
+  const onAfterSubmitSuccess = () => {
+    onCloseModal()
+    submitSearch(searchQuery) // refetch search result
   }
 
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
@@ -156,6 +166,7 @@ export default function CreateModal({ isOpen, onCancel }: any) {
         contact: get(submitData, 'contact', null),
         xlsxFile: XLSXFile,
         pdfFile: PDFFile,
+        successCallbackFunction: onAfterSubmitSuccess,
       })
     )
     handleCloseConfirmModal()
@@ -356,6 +367,7 @@ export default function CreateModal({ isOpen, onCancel }: any) {
                           type='file'
                           accept='.xlsx'
                           style={{ width: '100%' }}
+                          value={formik.values.xlsxFile}
                           onChange={handleXLSXFileInput}
                         />
                       </Stack>
@@ -394,6 +406,7 @@ export default function CreateModal({ isOpen, onCancel }: any) {
                           type='file'
                           accept='.pdf, .zip'
                           style={{ width: '100%' }}
+                          value={formik.values.pdfFile}
                           onChange={handlePDFFileInput}
                         />
                       </Stack>

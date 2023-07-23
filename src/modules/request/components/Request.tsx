@@ -102,6 +102,7 @@ export default function Request() {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
   const dispatch = useDispatch()
+  const [submitData, setSubmitData] = useState({})
 
   const validationSchema = yup.object({})
 
@@ -118,19 +119,23 @@ export default function Request() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(
-        requestActions.searchPersonLetter({
-          letterNo: get(values, 'letterNo', null),
-          startDate,
-          endDate,
-          status1,
-          status2,
-          status3,
-          status4,
-        })
-      )
+      const data = {
+        letterNo: get(values, 'letterNo', null),
+        startDate,
+        endDate,
+        status1,
+        status2,
+        status3,
+        status4,
+      }
+      submitSearch(data)
+      setSubmitData(data)
     },
   })
+
+  const submitSearch = (data) => {
+    dispatch(requestActions.searchPersonLetter(data))
+  }
 
   useEffect(() => {
     return () => {
@@ -452,7 +457,7 @@ export default function Request() {
           <KeyboardArrowUpIcon style={{ color: 'white' }} />
         </Fab>
       </ScrollTop>
-      <CreateModal isOpen={isOpenModal} onCancel={onCloseModal} />
+      <CreateModal isOpen={isOpenModal} onCancel={onCloseModal} submitSearch={submitSearch} searchQuery={submitData}/>
     </>
   )
 }
