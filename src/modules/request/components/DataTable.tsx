@@ -31,8 +31,7 @@ import {
   Cancel as CancelIcon,
   WatchLater as PendingIcon,
   PlayCircleFilled as InProgressIcon,
-  Visibility as ViewIcon,
-  GridOn as XLSXIcon,
+  Description as XLSXIcon,
   InsertDriveFile as PDFIcon,
   Archive as ZipIcon,
 } from '@material-ui/icons'
@@ -331,7 +330,7 @@ export default function DataTable({ data, loading }: DataTableProps) {
               >
                 <Stack direction='row' alignItems='center' spacing={1}>
                   <XLSXIcon fontSize='small' />
-                  <div>เปิดไฟล์ XLSX</div>
+                  <div>XLSX</div>
                 </Stack>
               </Link>
             </Stack>
@@ -364,7 +363,9 @@ export default function DataTable({ data, loading }: DataTableProps) {
                 color='primary'
                 underline='hover'
                 onClick={() => {
-                  isPDF && handleOpenPdfPreviewModal(filePath)
+                  isPDF
+                    ? handleOpenPdfPreviewModal(filePath)
+                    : window.open(filePath, '_blank')
                 }}
                 style={{ cursor: 'pointer' }}
               >
@@ -374,7 +375,7 @@ export default function DataTable({ data, loading }: DataTableProps) {
                   ) : (
                     <ZipIcon fontSize='small' />
                   )}
-                  <div>{isPDF ? 'เปิดไฟล์ PDF' : 'ดาวน์โหลดไฟล์ ZIP'}</div>
+                  <div>{isPDF ? 'PDF' : 'ZIP'}</div>
                 </Stack>
               </Link>
             </Stack>
@@ -476,8 +477,7 @@ export default function DataTable({ data, loading }: DataTableProps) {
               variant='contained'
               color='primary'
               size='small'
-              sx={{ borderRadius: 24 }}
-              startIcon={<ViewIcon />}
+              sx={{ borderRadius: 24, padding: '4px 16px' }}
               onClick={() => handleClickViewAppro(id)}
             >
               ดูผลการรับรอง
