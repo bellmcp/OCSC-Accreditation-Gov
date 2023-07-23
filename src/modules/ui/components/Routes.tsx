@@ -4,9 +4,8 @@ import PrivateRoute from 'modules/routes/PrivateRoute'
 
 import Login from 'modules/login/components/Login'
 import HomeRoutes from 'modules/home/Routes'
+import RequestRoutes from 'modules/request/Routes'
 import SearchRoutes from 'modules/search/Routes'
-import CurriculumRoutes from 'modules/curriculum/Routes'
-import InfoRoutes from 'modules/info/Routes'
 
 import NotFound from './NotFound'
 
@@ -19,8 +18,7 @@ export default function Routes() {
         <Login />
       </Route>
       <PrivateRoute path={`${PATH}/search`} component={SearchRoutes} />
-      <PrivateRoute path={`${PATH}/curriculum`} component={CurriculumRoutes} />
-      <PrivateRoute path={`${PATH}/info`} component={InfoRoutes} />
+      <PrivateRoute path={`${PATH}/request`} component={RequestRoutes} />
       <PrivateRoute exact path={`${PATH}`} component={HomeRoutes} />
       <Redirect to={`${PATH}`}></Redirect>
       <Route>

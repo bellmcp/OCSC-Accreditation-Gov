@@ -5,10 +5,8 @@ import { loadingBarReducer } from 'react-redux-loading-bar'
 import uiReducer from 'modules/ui/reducer'
 import loginReducer from 'modules/login/reducer'
 import homeReducer from 'modules/home/reducer'
+import requestReducer from 'modules/request/reducer'
 import searchReducer from 'modules/search/reducer'
-import personLetterReducer from 'modules/personLetter/reducer'
-import infoReducer from 'modules/info/reducer'
-import curriculumReducer from 'modules/curriculum/reducer'
 
 export default (history: any) =>
   combineReducers({
@@ -17,8 +15,6 @@ export default (history: any) =>
     login: loginReducer,
     ui: uiReducer,
     home: homeReducer,
+    request: requestReducer,
     search: searchReducer,
-    info: infoReducer,
-    personLetter: personLetterReducer,
-    curriculum: curriculumReducer,
   })
