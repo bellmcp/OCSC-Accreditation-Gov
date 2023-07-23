@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
-import { isEmpty } from 'lodash'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+// import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   useMediaQuery,
@@ -11,7 +10,7 @@ import {
   Box,
 } from '@material-ui/core'
 
-import * as uiActions from '../actions'
+// import * as uiActions from '../actions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,22 +39,22 @@ const OCSC_URL = 'https://www.ocsc.go.th/'
 
 export default function Footer() {
   const classes = useStyles()
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const isFhdUp = useMediaQuery('(min-width:1080px)')
 
-  const { footerInfo } = useSelector((state: any) => state.ui)
-  const { value1 = '', value2 = '', value3 = '', value4 = '' } = footerInfo
+  // const { footerInfo } = useSelector((state: any) => state.ui)
+  // const { value1 = '', value2 = '', value3 = '', value4 = '' } = footerInfo
 
-  useEffect(() => {
-    if (isEmpty(footerInfo)) {
-      const footer_info_action = uiActions.loadFooterInfo()
-      dispatch(footer_info_action)
-    }
-  }, [dispatch]) //eslint-disable-line
+  // useEffect(() => {
+  //   if (isEmpty(footerInfo)) {
+  //     const footer_info_action = uiActions.loadFooterInfo()
+  //     dispatch(footer_info_action)
+  //   }
+  // }, [dispatch]) //eslint-disable-line
 
-  const parseLinkToDefaultColor = (text: string) => {
-    return text.replace(/<a/g, '<a class="footer_link"')
-  }
+  // const parseLinkToDefaultColor = (text: string) => {
+  //   return text.replace(/<a/g, '<a class="footer_link"')
+  // }
 
   function DesktopFooter() {
     return (
@@ -82,7 +81,7 @@ export default function Footer() {
             </Link>
           </Typography>
         </Box>
-        <Box>
+        {/* <Box>
           {value1 && (
             <Typography variant='body2' color='inherit' align='right'>
               <div
@@ -134,7 +133,7 @@ export default function Footer() {
               ></div>
             </Typography>
           )}
-        </Box>
+        </Box> */}
       </Grid>
     )
   }
@@ -148,12 +147,12 @@ export default function Footer() {
             fontSize='h6.fontSize'
             fontWeight='fontWeightMedium'
             textAlign='center'
-            mb={6}
+            // mb={6}
           >
             {OCSC_NAME_TH}
           </Box>
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           {value1 && (
             <Box lineHeight={1.2} fontSize={12} textAlign='center' mb={1}>
               <div
@@ -190,10 +189,18 @@ export default function Footer() {
               ></div>
             </Box>
           )}
-        </Grid>
+        </Grid> */}
         <Grid item>
-          <Box mt={6} lineHeight={1.2} fontSize={9} textAlign='center'>
-            {'Copyright © '} {new Date().getFullYear()} {OCSC_NAME_EN}
+          <Box mt={3} lineHeight={1.2} fontSize={9} textAlign='center'>
+            {'Copyright © '} {new Date().getFullYear()}{' '}
+            <Link
+              className={classes.link}
+              href={OCSC_URL}
+              target='_blank'
+              underline='hover'
+            >
+              {OCSC_NAME_EN}
+            </Link>
           </Box>
         </Grid>
       </Grid>
