@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { get } from 'lodash'
 import { getCookie } from 'utils/cookies'
+import { handleApiError } from 'utils/error'
 
 import * as uiActions from 'modules/ui/actions'
 
@@ -16,6 +17,15 @@ const LOAD_PERSON_LETTER_SUCCESS =
   'ocsc-person-accredit/request/LOAD_PERSON_LETTER_SUCCESS'
 const LOAD_PERSON_LETTER_FAILURE =
   'ocsc-person-accredit/request/LOAD_PERSON_LETTER_FAILURE'
+const LOAD_UPLOAD_NOTE_REQUEST =
+  'ocsc-person-accredit/request/LOAD_UPLOAD_NOTE_REQUEST'
+const LOAD_UPLOAD_NOTE_SUCCESS =
+  'ocsc-person-accredit/request/LOAD_UPLOAD_NOTE_SUCCESS'
+const LOAD_UPLOAD_NOTE_FAILURE =
+  'ocsc-person-accredit/request/LOAD_UPLOAD_NOTE_FAILURE'
+const SUBMIT_FORM_REQUEST = 'ocsc-person-accredit/request/SUBMIT_FORM_REQUEST'
+const SUBMIT_FORM_SUCCESS = 'ocsc-person-accredit/request/SUBMIT_FORM_SUCCESS'
+const SUBMIT_FORM_FAILURE = 'ocsc-person-accredit/request/SUBMIT_FORM_FAILURE'
 
 const CLEAR_SEARCH_RESULT = 'ocsc-person-accredit/request/CLEAR_SEARCH_RESULT'
 
@@ -118,6 +128,77 @@ function loadPersonLetter(id: number) {
   }
 }
 
+function loadUploadNote(id: number) {
+  return async (dispatch: any) => {
+    const token = getCookie('token')
+    dispatch({ type: LOAD_UPLOAD_NOTE_REQUEST })
+    try {
+      var { data } = await axios.get('uploadnote', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      dispatch({
+        type: LOAD_UPLOAD_NOTE_SUCCESS,
+        payload: {
+          uploadNote: data,
+        },
+      })
+    } catch (err) {
+      dispatch({ type: LOAD_UPLOAD_NOTE_FAILURE })
+      dispatch(
+        uiActions.setFlashMessage(
+          `โหลดหน้ายื่นคำร้องใหม่ไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+            err,
+            'response.status',
+            'บางอย่าง'
+          )}`,
+          'error'
+        )
+      )
+    }
+  }
+}
+
+function submitForm({
+  letterNo,
+  letterDate,
+  workplace,
+  contact,
+  xlsxFile,
+  pdfFile,
+}: any) {
+  return async (dispatch: any) => {
+    const token = getCookie('token')
+    dispatch({ type: SUBMIT_FORM_REQUEST })
+    try {
+      var bodyFormData = new FormData()
+      bodyFormData.append('letterNo', letterNo)
+      bodyFormData.append('letterDate', letterDate)
+      bodyFormData.append('workplace', workplace)
+      bodyFormData.append('contact', contact)
+      bodyFormData.append('xlsxFile', xlsxFile)
+      bodyFormData.append('pdfFile', pdfFile)
+
+      var { data } = await axios.post('personletters', bodyFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      dispatch({
+        type: SUBMIT_FORM_SUCCESS,
+        payload: {
+          message: data,
+        },
+      })
+    } catch (err) {
+      dispatch({ type: SUBMIT_FORM_FAILURE })
+      handleApiError(err, dispatch)
+    }
+  }
+}
+
 function clearSearchResult() {
   return (dispatch: any) => {
     dispatch({
@@ -133,8 +214,16 @@ export {
   LOAD_PERSON_LETTER_REQUEST,
   LOAD_PERSON_LETTER_SUCCESS,
   LOAD_PERSON_LETTER_FAILURE,
+  LOAD_UPLOAD_NOTE_REQUEST,
+  LOAD_UPLOAD_NOTE_SUCCESS,
+  LOAD_UPLOAD_NOTE_FAILURE,
+  SUBMIT_FORM_REQUEST,
+  SUBMIT_FORM_SUCCESS,
+  SUBMIT_FORM_FAILURE,
   CLEAR_SEARCH_RESULT,
   searchPersonLetter,
   loadPersonLetter,
+  loadUploadNote,
+  submitForm,
   clearSearchResult,
 }

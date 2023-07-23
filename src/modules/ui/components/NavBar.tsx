@@ -278,6 +278,7 @@ export default function NavBar({
     eraseCookie('lastname')
     eraseCookie('id')
     eraseCookie('workplace')
+    eraseCookie('contact')
     dispatch(uiActions.setFlashMessage('ออกจากระบบเรียบร้อยแล้ว', 'success'))
     setTimeout(() => {
       history.push(`${PATH}/login`)

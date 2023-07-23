@@ -52,6 +52,7 @@ function loadLogin(userInfo: any, role: string) {
       setCookie('lastname', get(result, 'data.lastname', ''), 3)
       setCookie('id', String(get(result, 'data.id', 0)), 3)
       setCookie('workplace', String(get(result, 'data.workplace', '')), 3)
+      setCookie('contact', String(get(result, 'data.contact', '')), 3)
       dispatch(push(`${PATH}`))
       dispatch(uiActions.setFlashMessage('เข้าสู่ระบบเรียบร้อยแล้ว', 'success'))
     } catch (err) {

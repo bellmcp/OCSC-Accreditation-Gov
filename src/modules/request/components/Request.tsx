@@ -44,6 +44,7 @@ import * as requestActions from 'modules/request/actions'
 import Loading from 'modules/ui/components/Loading'
 import DataTable from './DataTable'
 import DatePicker from './DatePicker'
+import CreateModal from './CreateModal'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -165,6 +166,14 @@ export default function Request() {
 
   const handleChangeStatus4 = (event: any) => {
     setStatus4(event.target.checked)
+  }
+
+  const [isOpenModal, setIsOpenModal] = useState(false)
+  const handleClickCreateRequest = () => {
+    setIsOpenModal(true)
+  }
+  const onCloseModal = () => {
+    setIsOpenModal(false)
   }
 
   const handleSwitchTableMaxWidth = () => {
@@ -290,6 +299,7 @@ export default function Request() {
                   variant='contained'
                   color='secondary'
                   startIcon={<AddIcon />}
+                  onClick={handleClickCreateRequest}
                 >
                   ยื่นคำร้องใหม่
                 </Button>
@@ -442,6 +452,7 @@ export default function Request() {
           <KeyboardArrowUpIcon style={{ color: 'white' }} />
         </Fab>
       </ScrollTop>
+      <CreateModal isOpen={isOpenModal} onCancel={onCloseModal} />
     </>
   )
 }

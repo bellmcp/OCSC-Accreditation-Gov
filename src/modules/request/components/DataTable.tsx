@@ -275,7 +275,7 @@ export default function DataTable({ data, loading }: DataTableProps) {
     },
     {
       field: 'xlsxFile',
-      headerName: 'ไฟล์แนบสเปรตชีต XLSX',
+      headerName: 'ไฟล์แนบสเปรดชีต XLSX',
       width: 200,
       align: 'center',
       headerAlign: 'center',
