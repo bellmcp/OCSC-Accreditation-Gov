@@ -457,7 +457,12 @@ export default function Request() {
           <KeyboardArrowUpIcon style={{ color: 'white' }} />
         </Fab>
       </ScrollTop>
-      <CreateModal isOpen={isOpenModal} onCancel={onCloseModal} submitSearch={submitSearch} searchQuery={submitData}/>
+      <CreateModal
+        isOpen={isOpenModal}
+        onCancel={onCloseModal}
+        submitSearch={submitSearch}
+        searchQuery={submitData}
+      />
     </>
   )
 }

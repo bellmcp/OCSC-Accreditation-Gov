@@ -39,6 +39,7 @@ import {
 import { green, red, amber, indigo } from '@material-ui/core/colors'
 import { createTheme, ThemeProvider, alpha, styled } from '@mui/material/styles'
 import ApproModal from './ApproModal'
+import PreviewModal from './PreviewModal'
 
 import * as requestActions from 'modules/request/actions'
 
@@ -245,6 +246,16 @@ export default function DataTable({ data, loading }: DataTableProps) {
     )
   }
 
+  const [isOpenPreviewModal, setIsOpenPreviewModal] = useState(false)
+  const [currentFilePath, setCurrentFilePath] = useState('')
+  const handleOpenPreviewModal = (filePath: string) => {
+    setIsOpenPreviewModal(true)
+    setCurrentFilePath(filePath)
+  }
+  const handleClosePreviewModal = () => {
+    setIsOpenPreviewModal(false)
+  }
+
   const columns: GridColDef[] = [
     {
       field: 'order',
@@ -293,11 +304,11 @@ export default function DataTable({ data, loading }: DataTableProps) {
           return (
             <Stack direction='row' alignItems='center' spacing={1}>
               <Link
-                href={filePath}
-                target='_blank'
+                // href={filePath}
+                // target='_blank'
                 color='primary'
                 underline='hover'
-                // onClick={() => handleClickOpen(filePath)}
+                onClick={() => handleOpenPreviewModal(filePath)}
                 style={{ cursor: 'pointer' }}
               >
                 <Stack direction='row' alignItems='center' spacing={1}>
@@ -332,11 +343,11 @@ export default function DataTable({ data, loading }: DataTableProps) {
           return (
             <Stack direction='row' alignItems='center' spacing={1}>
               <Link
-                href={filePath}
-                target='_blank'
+                // href={filePath}
+                // target='_blank'
                 color='primary'
                 underline='hover'
-                // onClick={() => handleClickOpen(filePath)}
+                onClick={() => handleOpenPreviewModal(filePath)}
                 style={{ cursor: 'pointer' }}
               >
                 <Stack direction='row' alignItems='center' spacing={1}>
@@ -633,6 +644,11 @@ export default function DataTable({ data, loading }: DataTableProps) {
         />
       </div>
       <ApproModal isOpen={isOpen} onCancel={onCancel} />
+      <PreviewModal
+        open={isOpenPreviewModal}
+        handleClose={handleClosePreviewModal}
+        filePath={currentFilePath}
+      />
     </ThemeProvider>
   )
 }
