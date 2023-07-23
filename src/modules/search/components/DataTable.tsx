@@ -71,7 +71,7 @@ const columns: GridColDef[] = [
   },
   {
     field: 'fullName',
-    headerName: 'ชื่อ นามสกุล',
+    headerName: 'ชื่อ-นามสกุล',
     width: 250,
     renderCell: renderCellExpand,
   },

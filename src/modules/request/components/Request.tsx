@@ -179,11 +179,7 @@ export default function Request() {
     const parsed = initialSearchResults.map((item: any, index: number) => {
       return {
         order: index + 1,
-        fullName: `${get(item, 'title', '')} ${get(
-          item,
-          'firstName',
-          ''
-        )} ${get(item, 'lastName', '')}`,
+        appro: get(item, 'id', null),
         ...item,
       }
     })
