@@ -10,6 +10,12 @@ const SEARCH_PERSON_LETTER_SUCCESS =
   'ocsc-person-accredit/request/SEARCH_PERSON_LETTER_SUCCESS'
 const SEARCH_PERSON_LETTER_FAILURE =
   'ocsc-person-accredit/request/SEARCH_PERSON_LETTER_FAILURE'
+const LOAD_PERSON_LETTER_REQUEST =
+  'ocsc-person-accredit/request/LOAD_PERSON_LETTER_REQUEST'
+const LOAD_PERSON_LETTER_SUCCESS =
+  'ocsc-person-accredit/request/LOAD_PERSON_LETTER_SUCCESS'
+const LOAD_PERSON_LETTER_FAILURE =
+  'ocsc-person-accredit/request/LOAD_PERSON_LETTER_FAILURE'
 
 const CLEAR_SEARCH_RESULT = 'ocsc-person-accredit/request/CLEAR_SEARCH_RESULT'
 
@@ -71,6 +77,47 @@ function searchPersonLetter({
   }
 }
 
+function loadPersonLetter(id: number) {
+  return async (dispatch: any) => {
+    const token = getCookie('token')
+    dispatch({ type: LOAD_PERSON_LETTER_REQUEST })
+    try {
+      var { data: res1 } = await axios.get(`/personletters/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      var { data: res2 } = await axios.get(`/personletters/${id}/items`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      if (res2.length === 0) {
+        res2 = []
+      }
+      dispatch({
+        type: LOAD_PERSON_LETTER_SUCCESS,
+        payload: {
+          personLetter: res1,
+          personLetterItems: res2,
+        },
+      })
+    } catch (err) {
+      dispatch({ type: LOAD_PERSON_LETTER_FAILURE })
+      dispatch(
+        uiActions.setFlashMessage(
+          `โหลดผลการรับรองไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+            err,
+            'response.status',
+            'บางอย่าง'
+          )}`,
+          'error'
+        )
+      )
+    }
+  }
+}
+
 function clearSearchResult() {
   return (dispatch: any) => {
     dispatch({
@@ -83,7 +130,11 @@ export {
   SEARCH_PERSON_LETTER_REQUEST,
   SEARCH_PERSON_LETTER_SUCCESS,
   SEARCH_PERSON_LETTER_FAILURE,
+  LOAD_PERSON_LETTER_REQUEST,
+  LOAD_PERSON_LETTER_SUCCESS,
+  LOAD_PERSON_LETTER_FAILURE,
   CLEAR_SEARCH_RESULT,
   searchPersonLetter,
+  loadPersonLetter,
   clearSearchResult,
 }

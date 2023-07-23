@@ -8,10 +8,7 @@ import {
 const initialState = {
   isLoading: false,
   isSearching: false,
-  isIncrementing: false,
-  educationLevels: [],
   searchResults: [],
-  visitor: 0,
 }
 
 export default function (state = initialState, action: any) {
@@ -26,7 +23,6 @@ export default function (state = initialState, action: any) {
       }
     case SEARCH_PERSON_LETTER_ITEMS_FAILURE:
       return { ...state, isSearching: false }
-
     case CLEAR_SEARCH_RESULT:
       return { ...state, searchResults: [] }
     default:

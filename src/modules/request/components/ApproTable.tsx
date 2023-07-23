@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import * as React from 'react'
 import { format } from 'date-fns'
-import { get } from 'lodash'
 
 import {
   DataGrid,
@@ -15,32 +13,13 @@ import {
   GridToolbarExport,
   GridToolbarDensitySelector,
 } from '@mui/x-data-grid'
-import {
-  Box,
-  Typography,
-  Paper,
-  Popper,
-  Stack,
-  Divider,
-  Link,
-  Button,
-} from '@mui/material'
-
-import {
-  CheckCircle as CheckIcon,
-  Cancel as CancelIcon,
-  WatchLater as PendingIcon,
-  PlayCircleFilled as InProgressIcon,
-  Visibility as ViewIcon,
-  GridOn as XLSXIcon,
-  InsertDriveFile as PDFIcon,
-  Archive as ZipIcon,
-} from '@material-ui/icons'
-import { green, red, amber, indigo } from '@material-ui/core/colors'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
+import Popper from '@mui/material/Popper'
+import Stack from '@mui/material/Stack'
+import Divider from '@mui/material/Divider'
 import { createTheme, ThemeProvider, alpha, styled } from '@mui/material/styles'
-import ApproModal from './ApproModal'
-
-import * as requestActions from 'modules/request/actions'
 
 const ODD_OPACITY = 0.07
 
@@ -81,6 +60,46 @@ const theme = createTheme(
   },
   bgBG
 )
+
+const columns: GridColDef[] = [
+  {
+    field: 'id',
+    headerName: 'ลำดับ',
+    width: 80,
+    align: 'center',
+    headerAlign: 'center',
+  },
+  {
+    field: 'fullName',
+    headerName: 'ชื่อ-นามสกุล',
+    width: 250,
+    renderCell: renderCellExpand,
+  },
+  {
+    field: 'degree',
+    headerName: 'ปริญญา',
+    width: 300,
+    renderCell: renderCellExpand,
+  },
+  {
+    field: 'branch',
+    headerName: 'สาขาวิชา',
+    width: 475,
+    renderCell: renderCellExpand,
+  },
+  {
+    field: 'appro',
+    headerName: 'ผลการรับรอง',
+    width: 475,
+    renderCell: renderCellExpand,
+  },
+  {
+    field: 'note',
+    headerName: 'หมายเหตุ',
+    width: 550,
+    renderCell: renderCellExpand,
+  },
+]
 
 interface GridCellExpandProps {
   value: string
@@ -198,22 +217,7 @@ function renderCellExpand(params: GridRenderCellParams<string>) {
   )
 }
 
-export default function DataTable({ data, loading }: DataTableProps) {
-  const dispatch = useDispatch()
-  const [isOpen, setIsOpen] = useState(false)
-
-  const openModal = () => {
-    setIsOpen(true)
-  }
-  const onCancel = () => {
-    setIsOpen(false)
-  }
-
-  const handleClickViewAppro = (id: number) => {
-    dispatch(requestActions.loadPersonLetter(id))
-    openModal()
-  }
-
+export default function ApproTable({ data, loading }: DataTableProps) {
   function CustomToolbar() {
     return (
       <GridToolbarContainer
@@ -244,222 +248,6 @@ export default function DataTable({ data, loading }: DataTableProps) {
       </GridToolbarContainer>
     )
   }
-
-  const columns: GridColDef[] = [
-    {
-      field: 'order',
-      headerName: 'ลำดับ',
-      width: 80,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'id',
-      headerName: 'เลขที่',
-      width: 100,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'submitDate',
-      headerName: 'วันที่ยื่นคำร้อง',
-      width: 220,
-      renderCell: renderCellExpand,
-    },
-    {
-      field: 'note',
-      headerName:
-        'ชื่อ-นามสกุล หมายเลขโทรศัพท์ หรือ อีเมล เจ้าหน้าที่ผู้รับผิดชอบ',
-      width: 450,
-      renderCell: renderCellExpand,
-    },
-    {
-      field: 'xlsxFile',
-      headerName: 'ไฟล์แนบสเปรตชีต XLSX',
-      width: 200,
-      align: 'center',
-      headerAlign: 'center',
-      disableColumnMenu: true,
-      disableReorder: true,
-      disableExport: true,
-      filterable: false,
-      sortable: false,
-      renderCell: (params) => {
-        const filePath = get(params, 'value', null)
-
-        if (filePath === null || filePath === undefined) {
-          return <></>
-        } else {
-          return (
-            <Stack direction='row' alignItems='center' spacing={1}>
-              <Link
-                href={filePath}
-                target='_blank'
-                color='primary'
-                underline='hover'
-                // onClick={() => handleClickOpen(filePath)}
-                style={{ cursor: 'pointer' }}
-              >
-                <Stack direction='row' alignItems='center' spacing={1}>
-                  <XLSXIcon fontSize='small' />
-                  <div>เปิดไฟล์</div>
-                </Stack>
-              </Link>
-            </Stack>
-          )
-        }
-      },
-    },
-    {
-      field: 'pdfFile',
-      headerName: 'ไฟล์แนบ PDF หรือ ZIP',
-      width: 200,
-      align: 'center',
-      headerAlign: 'center',
-      disableColumnMenu: true,
-      disableReorder: true,
-      disableExport: true,
-      filterable: false,
-      sortable: false,
-      renderCell: (params) => {
-        const filePath = get(params, 'value', null)
-        const last3StrFilePath = filePath.slice(-3, filePath.length)
-        const isPDF = last3StrFilePath === 'pdf' || last3StrFilePath === 'PDF'
-
-        if (filePath === null || filePath === undefined) {
-          return <></>
-        } else {
-          return (
-            <Stack direction='row' alignItems='center' spacing={1}>
-              <Link
-                href={filePath}
-                target='_blank'
-                color='primary'
-                underline='hover'
-                // onClick={() => handleClickOpen(filePath)}
-                style={{ cursor: 'pointer' }}
-              >
-                <Stack direction='row' alignItems='center' spacing={1}>
-                  {isPDF ? (
-                    <PDFIcon fontSize='small' />
-                  ) : (
-                    <ZipIcon fontSize='small' />
-                  )}
-                  <div>เปิดไฟล์</div>
-                </Stack>
-              </Link>
-            </Stack>
-          )
-        }
-      },
-    },
-    {
-      field: 'status',
-      headerName: 'สถานะ',
-      headerAlign: 'center',
-      width: 180,
-      renderCell: (params) => {
-        const value = get(params, 'value', '')
-
-        switch (value) {
-          case 'อยู่ระหว่างดำเนินการ':
-            return (
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <InProgressIcon
-                  style={{
-                    color: indigo[800],
-                  }}
-                />
-                <Typography
-                  variant='body2'
-                  style={{ color: indigo[800], fontWeight: 600 }}
-                >
-                  อยู่ระหว่างดำเนินการ
-                </Typography>
-              </Stack>
-            )
-          case 'รออนุมัติ':
-            return (
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <PendingIcon
-                  style={{
-                    color: amber[800],
-                  }}
-                />
-                <Typography
-                  variant='body2'
-                  style={{ color: amber[800], fontWeight: 600 }}
-                >
-                  รออนุมัติ
-                </Typography>
-              </Stack>
-            )
-          case 'เสร็จสิ้น':
-            return (
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <CheckIcon
-                  style={{
-                    color: green[800],
-                  }}
-                />
-                <Typography
-                  variant='body2'
-                  style={{ color: green[800], fontWeight: 600 }}
-                >
-                  เสร็จสิ้น
-                </Typography>
-              </Stack>
-            )
-          case 'ยกเลิก':
-            return (
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <CancelIcon
-                  style={{
-                    color: red[800],
-                  }}
-                />
-                <Typography
-                  variant='body2'
-                  style={{ color: red[800], fontWeight: 600 }}
-                >
-                  ยกเลิก
-                </Typography>
-              </Stack>
-            )
-          default:
-            return <></>
-        }
-      },
-    },
-    {
-      field: 'appro',
-      headerName: 'ผลการรับรอง',
-      align: 'center',
-      headerAlign: 'center',
-      width: 200,
-      renderCell: (params) => {
-        const status = get(params, 'row.status', '')
-        const id = get(params, 'row.id', null)
-
-        if (status === 'เสร็จสิ้น') {
-          return (
-            <Button
-              variant='contained'
-              color='primary'
-              size='small'
-              sx={{ borderRadius: 24 }}
-              startIcon={<ViewIcon />}
-              onClick={() => handleClickViewAppro(id)}
-            >
-              ดูผลการรับรอง
-            </Button>
-          )
-        } else {
-          return <></>
-        }
-      },
-    },
-  ]
 
   return (
     <ThemeProvider theme={theme}>
@@ -632,7 +420,6 @@ export default function DataTable({ data, loading }: DataTableProps) {
           }}
         />
       </div>
-      <ApproModal isOpen={isOpen} onCancel={onCancel} />
     </ThemeProvider>
   )
 }
