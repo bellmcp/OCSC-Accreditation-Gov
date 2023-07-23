@@ -121,9 +121,13 @@ export default function NavDrawer({
           <CloseIcon />
         </IconButton>
         <p className={classes.title}>
-          กลุ่มงานรับรองคุณวุฒิ
+          ระบบการพิจารณา
           <br />
-          สำนักงาน ก.พ.
+          การรับรองคุณวุฒิ
+          <br />
+          ด้วยระบบอิเล็กทรอนิกส์
+          <br />
+          (สำหรับส่วนราชการ)
         </p>
         <List>
           {navigationItems.map((navigationItem, index) => (

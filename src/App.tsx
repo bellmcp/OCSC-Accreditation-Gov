@@ -8,9 +8,11 @@ import ScrollToTop from 'utils/ScrollToTop'
 import Layout from 'modules/ui/components/Layout'
 import META_IMAGE from './meta.jpg'
 
-const TITLE = 'กลุ่มงานรับรองคุณวุฒิ สำนักงาน ก.พ.'
+const TITLE =
+  'ระบบการพิจารณาการรับรองคุณวุฒิด้วยระบบอิเล็กทรอนิกส์ (สำหรับส่วนราชการ)'
 const URL = process.env.REACT_APP_PLATFORM_URL
-const DESCRIPTION = 'กลุ่มงานรับรองคุณวุฒิ สำนักงาน ก.พ.'
+const DESCRIPTION =
+  'ระบบการพิจารณาการรับรองคุณวุฒิด้วยระบบอิเล็กทรอนิกส์ (สำหรับส่วนราชการ)'
 
 const store = configureStore()
 
