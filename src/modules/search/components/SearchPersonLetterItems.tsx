@@ -112,7 +112,7 @@ export default function SearchPersonLetterItems() {
       dispatch(
         searchActions.searchPersonLetterItems({
           letterNo: get(values, 'letterNo', null),
-          letterDate: get(values, 'letterDate', null),
+          letterDate: date,
           nationalId: get(values, 'nationalId', null),
           name: get(values, 'name', null),
         })
@@ -282,10 +282,10 @@ export default function SearchPersonLetterItems() {
                   </Grid>
                   <Grid xs={12} md={3}>
                     <TextField
-                      id='university'
-                      name='university'
+                      id='letterNo'
+                      name='letterNo'
                       placeholder='เลขที่หนังสือนำส่งสำนักงาน ก.พ.'
-                      value={formik.values.university}
+                      value={formik.values.letterNo}
                       onChange={formik.handleChange}
                       variant='outlined'
                       size='small'
@@ -322,10 +322,10 @@ export default function SearchPersonLetterItems() {
                   </Grid>
                   <Grid xs={12} md={3}>
                     <TextField
-                      id='degree'
-                      name='degree'
+                      id='nationalId'
+                      name='nationalId'
                       placeholder='เลขประจำตัวประชาชน'
-                      value={formik.values.degree}
+                      value={formik.values.nationalId}
                       onChange={formik.handleChange}
                       variant='outlined'
                       size='small'
@@ -347,10 +347,10 @@ export default function SearchPersonLetterItems() {
                   </Grid>
                   <Grid xs={12} md={3}>
                     <TextField
-                      id='branch'
-                      name='branch'
+                      id='name'
+                      name='name'
                       placeholder='ชื่อ หรือ นามสกุล'
-                      value={formik.values.branch}
+                      value={formik.values.name}
                       onChange={formik.handleChange}
                       variant='outlined'
                       size='small'
