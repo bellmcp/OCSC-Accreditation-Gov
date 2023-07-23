@@ -17,16 +17,9 @@ import {
   Typography,
   Grid,
   Box,
-  Select,
   Button,
   TextField,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormHelperText,
-  FormControl,
   Paper,
-  MenuItem,
   Divider,
   Fab,
   Zoom,
@@ -45,6 +38,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import * as searchActions from 'modules/search/actions'
 import Loading from 'modules/ui/components/Loading'
 import DataTable from './DataTable'
+import DatePicker from './DatePicker'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -105,48 +99,28 @@ export default function SearchCurriculum() {
 
   const validationSchema = yup.object({})
 
-  const getLevelIdByLabel = (label: string) => {
-    const result = educationLevels.find((item: any) => {
-      return item.level === label
-    })
-    return get(result, 'id', 0)
-  }
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      type: 'both',
-      level: 0,
-      status: 'active',
-      university: '',
-      faculty: '',
-      degree: '',
-      branch: '',
+      letterNo: null,
+      letterDate: null,
+      nationalId: null,
+      name: null,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(
         searchActions.searchCurriculums({
-          isGov:
-            get(values, 'type', 'both') === 'gov' ||
-            get(values, 'type', 'both') === 'both',
-          isPrivate:
-            get(values, 'type', 'both') === 'org' ||
-            get(values, 'type', 'both') === 'both',
-          level: getLevelIdByLabel(get(values, 'level', 0)),
-          university: get(values, 'university', ''),
-          faculty: get(values, 'faculty', ''),
-          degree: get(values, 'degree', ''),
-          branch: get(values, 'branch', ''),
-          isLetter: get(values, 'status', 'active') === 'active',
+          letterNo: get(values, 'letterNo', null),
+          letterDate: get(values, 'letterDate', null),
+          nationalId: get(values, 'nationalId', null),
+          name: get(values, 'name', null),
         })
       )
     },
   })
 
   useEffect(() => {
-    dispatch(searchActions.loadEducationlevels())
-    dispatch(searchActions.incrementVisitor())
     return () => {
       dispatch(searchActions.clearSearchResult())
     }
@@ -156,37 +130,32 @@ export default function SearchCurriculum() {
     <span style={{ color: theme.palette.primary.main, marginLeft: 2 }}>*</span>
   )
 
-  const [educationLevels, setEducationLevels] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [tableMaxWidth, setTableMaxWidth] = useState<any>('lg')
+  const [date, setDate] = useState<string>(null)
 
   const handleSwitchTableMaxWidth = () => {
     if (tableMaxWidth === 'lg') setTableMaxWidth(false)
     else setTableMaxWidth('lg')
   }
 
-  const {
-    educationLevels: initalEducationLevels = [],
-    visitor = 0,
-    isIncrementing = false,
-    searchResults: initialSearchResults = [],
-    isSearching = false,
-  } = useSelector((state: any) => state.search)
+  const { searchResults: initialSearchResults = [], isSearching = false } =
+    useSelector((state: any) => state.search)
 
   useEffect(() => {
     const parsed = initialSearchResults.map((item: any, index: number) => {
       return {
         order: index + 1,
-        accreditation: get(item, 'accreditation1', ''),
+        fullName: `${get(item, 'title', '')} ${get(
+          item,
+          'firstName',
+          ''
+        )} ${get(item, 'lastName', '')}`,
         ...item,
       }
     })
     setSearchResults(parsed)
   }, [initialSearchResults])
-
-  useEffect(() => {
-    setEducationLevels(initalEducationLevels)
-  }, [initalEducationLevels])
 
   const renderSearchResult = () => {
     if (isSearching) {
@@ -267,178 +236,16 @@ export default function SearchCurriculum() {
               alignItems='center'
               style={{ marginBottom: 24 }}
             >
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <Typography
                   component='h2'
                   variant='h6'
                   className={classes.sectionTitle}
                 >
-                  ค้นหาการรับรองคุณวุฒิหลักสูตร
+                  ค้นหาหนังสือรับรองคุณวุฒิที่ยื่นผ่านช่องทางอิเล็กทรอนิกส์
                 </Typography>
               </Grid>
-              <Grid
-                item
-                xs={6}
-                container
-                direction='column'
-                alignItems='flex-end'
-                spacing={0}
-              >
-                <Grid item>
-                  <Typography variant='body2'>จำนวนครั้งที่เข้าชม</Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant='h6' color='secondary'>
-                    <span style={{ fontWeight: 600 }}>
-                      {isIncrementing ? '...' : visitor.toLocaleString()}
-                    </span>{' '}
-                    ครั้ง
-                  </Typography>
-                </Grid>
-              </Grid>
             </Grid>
-            <Paper
-              elevation={0}
-              style={{
-                borderRadius: 16,
-                padding: 24,
-                boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
-                border: '1px solid rgb(204 242 251)',
-              }}
-            >
-              <Grid container item spacing={2}>
-                <Grid container item direction='row' alignItems='center'>
-                  <Grid xs={12} md={3}>
-                    <Typography
-                      variant='body1'
-                      color='textPrimary'
-                      style={{ fontWeight: 600 }}
-                    >
-                      ประเภทหลักสูตร
-                    </Typography>
-                  </Grid>
-                  <Grid xs={12} md={9}>
-                    <RadioGroup
-                      row
-                      id='type'
-                      name='type'
-                      value={formik.values.type}
-                      onChange={formik.handleChange}
-                    >
-                      <FormControlLabel
-                        value='both'
-                        control={<Radio size='small' />}
-                        label='หลักสูตรของรัฐ และเอกชน'
-                        style={{ marginRight: 96 }}
-                      />
-                      <FormControlLabel
-                        value='gov'
-                        control={<Radio size='small' />}
-                        label='หลักสูตรของรัฐ'
-                        style={{ marginRight: 96 }}
-                      />
-                      <FormControlLabel
-                        value='org'
-                        control={<Radio size='small' />}
-                        label='หลักสูตรของเอกชน'
-                      />
-                    </RadioGroup>
-                  </Grid>
-                </Grid>
-                <Grid container item direction='row' alignItems='center'>
-                  <Grid xs={12} md={3}>
-                    <Typography
-                      variant='body1'
-                      color='textPrimary'
-                      style={{ fontWeight: 600 }}
-                      gutterBottom
-                    >
-                      ระดับการศึกษา
-                    </Typography>
-                  </Grid>
-                  <Grid xs={12} md={9}>
-                    <FormControl fullWidth size='small'>
-                      <Select
-                        id='level'
-                        name='level'
-                        value={formik.values.level}
-                        onChange={formik.handleChange}
-                        variant='outlined'
-                        size='small'
-                        displayEmpty
-                        MenuProps={{
-                          anchorOrigin: {
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                          },
-                          transformOrigin: {
-                            vertical: 'top',
-                            horizontal: 'left',
-                          },
-                          getContentAnchorEl: null,
-                        }}
-                        renderValue={(selected) => {
-                          if (selected === 0) {
-                            return (
-                              <span
-                                style={{ color: theme.palette.text.secondary }}
-                              >
-                                เลือกระดับการศึกษา
-                              </span>
-                            )
-                          }
-                          return selected
-                        }}
-                      >
-                        {educationLevels.map((educationLevel: any) => (
-                          <MenuItem value={get(educationLevel, 'level', '')}>
-                            {get(educationLevel, 'level', '')}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      <FormHelperText>
-                        <Typography variant='body2' color='textSecondary'>
-                          ระดับปวช./ปวส.
-                          ที่ใช้หลักสูตรกลางของอาชีวะไม่ต้องระบุสถานศึกษา
-                        </Typography>
-                      </FormHelperText>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-                <Grid container item direction='row' alignItems='center'>
-                  <Grid xs={12} md={3}>
-                    <Typography
-                      variant='body1'
-                      color='textPrimary'
-                      style={{ fontWeight: 600 }}
-                    >
-                      สถานะหลักสูตร
-                    </Typography>
-                  </Grid>
-                  <Grid xs={12} md={9}>
-                    <RadioGroup
-                      row
-                      id='status'
-                      name='status'
-                      value={formik.values.status}
-                      onChange={formik.handleChange}
-                    >
-                      <FormControlLabel
-                        value='active'
-                        control={<Radio size='small' />}
-                        label='หลักสูตรที่ออกหนังสือเวียนแล้ว'
-                        style={{ marginRight: 66 }}
-                      />
-                      <FormControlLabel
-                        value='pending'
-                        control={<Radio size='small' />}
-                        label='หลักสูตรที่รอออกหนังสือเวียน'
-                      />
-                    </RadioGroup>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Paper>
             <Paper
               elevation={0}
               style={{
@@ -459,8 +266,6 @@ export default function SearchCurriculum() {
                       style={{ fontWeight: 500 }}
                     >
                       <b>*</b> ไม่จำเป็นต้องระบุข้อมูลที่ใช้ค้นหาครบทุกฟิลด์
-                      จะค้นจาก มหาวิทยาลัย หรือ คณะ หรือ ชื่อปริญญา หรือ
-                      สาขาวิชา หรือ ทั้งหมดก็ได้
                     </Typography>
                   </Grid>
                 </Grid>
@@ -472,20 +277,19 @@ export default function SearchCurriculum() {
                       style={{ fontWeight: 600 }}
                       gutterBottom
                     >
-                      มหาวิทยาลัย/สถาบันการศึกษา{note}
+                      เลขที่หนังสือนำส่งสำนักงาน ก.พ.{note}
                     </Typography>
                   </Grid>
-                  <Grid xs={12} md={9}>
+                  <Grid xs={12} md={3}>
                     <TextField
                       id='university'
                       name='university'
+                      placeholder='เลขที่หนังสือนำส่งสำนักงาน ก.พ.'
                       value={formik.values.university}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
-                      multiline={!matches}
                       rows={4}
                     />
                   </Grid>
@@ -498,22 +302,11 @@ export default function SearchCurriculum() {
                       style={{ fontWeight: 600 }}
                       gutterBottom
                     >
-                      คณะ/หน่วยงานที่เทียบเท่าคณะ{note}
+                      ลงวันที่{note}
                     </Typography>
                   </Grid>
-                  <Grid xs={12} md={9}>
-                    <TextField
-                      id='faculty'
-                      name='faculty'
-                      value={formik.values.faculty}
-                      onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
-                      variant='outlined'
-                      size='small'
-                      fullWidth
-                      multiline={!matches}
-                      rows={4}
-                    />
+                  <Grid xs={12} md={3}>
+                    <DatePicker date={date} setDate={setDate} />
                   </Grid>
                 </Grid>
                 <Grid container item direction='row' alignItems='center'>
@@ -524,20 +317,19 @@ export default function SearchCurriculum() {
                       style={{ fontWeight: 600 }}
                       gutterBottom
                     >
-                      ชื่อปริญญา/ประกาศนียบัตร{note}
+                      เลขประจำตัวประชาชน{note}
                     </Typography>
                   </Grid>
-                  <Grid xs={12} md={9}>
+                  <Grid xs={12} md={3}>
                     <TextField
                       id='degree'
                       name='degree'
+                      placeholder='เลขประจำตัวประชาชน'
                       value={formik.values.degree}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
-                      multiline={!matches}
                       rows={4}
                     />
                   </Grid>
@@ -550,20 +342,19 @@ export default function SearchCurriculum() {
                       style={{ fontWeight: 600 }}
                       gutterBottom
                     >
-                      สาขาวิชา/วิชาเอก{note}
+                      ชื่อ หรือ นามสกุล{note}
                     </Typography>
                   </Grid>
-                  <Grid xs={12} md={9}>
+                  <Grid xs={12} md={3}>
                     <TextField
                       id='branch'
                       name='branch'
+                      placeholder='ชื่อ หรือ นามสกุล'
                       value={formik.values.branch}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
-                      multiline={!matches}
                       rows={4}
                     />
                   </Grid>
@@ -580,26 +371,6 @@ export default function SearchCurriculum() {
             >
               ค้นหา
             </Button>
-            {/* <Grid
-              container
-              spacing={1}
-              direction='row'
-              justify='center'
-              alignItems='center'
-              alignContent='center'
-              wrap='nowrap'
-              style={{ marginTop: 16 }}
-            >
-              <Typography
-                variant='body2'
-                color='secondary'
-                align='center'
-                style={{ margin: '0 16px', fontWeight: 500 }}
-              >
-                จำกัดผลการค้นหาแค่ 50 รายการแรกเท่านั้น
-                โปรดใช้คำค้นหาที่เฉพาะเจาะจง
-              </Typography>
-            </Grid> */}
           </Box>
         </form>
       </Container>

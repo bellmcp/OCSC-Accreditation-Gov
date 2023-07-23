@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { get } from 'lodash'
 import { format } from 'date-fns'
 
 import {
@@ -62,128 +61,6 @@ const theme = createTheme(
   bgBG
 )
 
-interface GridAccreditationCellExpandProps {
-  params: any
-  width: number
-}
-
-const parseLinkToDefaultColor = (text: string) => {
-  return text.replace(/<a/g, '<a class="custom_link"')
-}
-
-const GridAccreditationCellExpand = React.memo(
-  function GridAccreditationCellExpand(
-    props: GridAccreditationCellExpandProps
-  ) {
-    const { width, params } = props
-    const wrapper = React.useRef<HTMLDivElement | null>(null)
-    const cellDiv = React.useRef(null)
-    const cellValue = React.useRef(null)
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-    const [showFullCell, setShowFullCell] = React.useState(false)
-    const [showPopper, setShowPopper] = React.useState(false)
-
-    const handleMouseEnter = () => {
-      const isCurrentlyOverflown = true
-      setShowPopper(isCurrentlyOverflown)
-      setAnchorEl(cellDiv.current)
-      setShowFullCell(true)
-    }
-
-    const handleMouseLeave = () => {
-      setShowFullCell(false)
-    }
-
-    React.useEffect(() => {
-      if (!showFullCell) {
-        return undefined
-      }
-
-      function handleKeyDown(nativeEvent: KeyboardEvent) {
-        // IE11, Edge (prior to using Bink?) use 'Esc'
-        if (nativeEvent.key === 'Escape' || nativeEvent.key === 'Esc') {
-          setShowFullCell(false)
-        }
-      }
-
-      document.addEventListener('keydown', handleKeyDown)
-
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown)
-      }
-    }, [setShowFullCell, showFullCell])
-
-    return (
-      <Box
-        ref={wrapper}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        sx={{
-          alignItems: 'center',
-          lineHeight: '24px',
-          width: 1,
-          height: 1,
-          position: 'relative',
-          display: 'flex',
-        }}
-      >
-        <Box
-          ref={cellDiv}
-          sx={{
-            height: 1,
-            width,
-            display: 'block',
-            position: 'absolute',
-            top: 0,
-          }}
-        />
-        <Box
-          ref={cellValue}
-          sx={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {get(params, 'row.accreditation1', '')}
-        </Box>
-        {showPopper && (
-          <Popper
-            open={showFullCell && anchorEl !== null}
-            anchorEl={anchorEl}
-            style={{ width, marginLeft: -17 }}
-          >
-            <Paper
-              elevation={3}
-              style={{
-                minHeight: wrapper.current!.offsetHeight - 3,
-                padding: 16,
-                borderRadius: 8,
-              }}
-            >
-              <Typography
-                variant='body2'
-                style={{ fontWeight: 500, marginBottom: 4 }}
-              >
-                {get(params, 'row.accreditation1', '')}
-              </Typography>
-              <Typography variant='caption'>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: parseLinkToDefaultColor(
-                      get(params, 'row.accreditation2', '')
-                    ),
-                  }}
-                ></div>
-              </Typography>
-            </Paper>
-          </Popper>
-        )}
-      </Box>
-    )
-  }
-)
-
 const columns: GridColDef[] = [
   {
     field: 'order',
@@ -193,51 +70,33 @@ const columns: GridColDef[] = [
     headerAlign: 'center',
   },
   {
-    field: 'university',
-    headerName: 'มหาวิทยาลัย/สถาบันการศึกษา',
-    width: 220,
+    field: 'fullName',
+    headerName: 'ชื่อ นามสกุล',
+    width: 250,
     renderCell: renderCellExpand,
   },
   {
     field: 'degree',
-    headerName: 'ชื่อปริญญา/ประกาศนียบัตร',
+    headerName: 'ปริญญา',
     width: 220,
     renderCell: renderCellExpand,
   },
   {
     field: 'branch',
-    headerName: 'สาขา/วิชาเอก',
+    headerName: 'สาขาวิชา',
     width: 220,
     renderCell: renderCellExpand,
   },
   {
-    field: 'category',
-    headerName: 'รัฐ/เอกชน',
-    width: 100,
-    renderCell: renderCellExpand,
-  },
-  {
-    field: 'level',
-    headerName: 'ระดับการศึกษา',
-    width: 120,
-    renderCell: renderCellExpand,
-  },
-  {
-    field: 'faculty',
-    headerName: 'คณะ/หน่วยงาน',
-    width: 200,
-    renderCell: renderCellExpand,
-  },
-  {
-    field: 'accreditation1',
+    field: 'appro',
     headerName: 'ผลการรับรอง',
     width: 375,
-    renderCell: renderAccreditationCellExpand,
+    renderCell: renderCellExpand,
   },
   {
     field: 'note',
     headerName: 'หมายเหตุ',
-    width: 300,
+    width: 375,
     renderCell: renderCellExpand,
   },
   {
@@ -246,7 +105,8 @@ const columns: GridColDef[] = [
     width: 150,
     renderCell: renderCellExpand,
   },
-  { field: 'letterDate', headerName: 'ลงวันที่', width: 120 },
+  { field: 'letterDatePrint', headerName: 'หนังสือเข้า', width: 120 },
+  { field: 'replyDatePrint', headerName: 'หนังสือออก', width: 120 },
   {
     field: 'id',
     headerName: 'เลขที่อ้างอิง',
@@ -367,15 +227,6 @@ function renderCellExpand(params: GridRenderCellParams<string>) {
   return (
     <GridCellExpand
       value={params.value || ''}
-      width={params.colDef.computedWidth}
-    />
-  )
-}
-
-function renderAccreditationCellExpand(params: GridRenderCellParams<string>) {
-  return (
-    <GridAccreditationCellExpand
-      params={params}
       width={params.colDef.computedWidth}
     />
   )
