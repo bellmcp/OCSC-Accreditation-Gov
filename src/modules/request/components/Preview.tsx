@@ -61,7 +61,7 @@ export default function Preview({ onClose, filePath }: any) {
               zIndex: 3,
             }}
           >
-            ไฟล์แนบสเปรดชีต XLSX
+            ไฟล์สเปรดชีต
           </Typography>
         </Grid>
         <Grid item>
@@ -114,7 +114,7 @@ export default function Preview({ onClose, filePath }: any) {
                 style={{ fontSize: 54, marginBottom: 14 }}
               />
               <Typography variant='body2' color='textSecondary' align='center'>
-                ไม่สามารถแสดงไฟล์ได้
+                ไม่สามารถแสดงไฟล์สเปรดชีตนี้ได้
                 <br />
                 โปรดดาวน์โหลด หรือลองใหม่อีกครั้ง
               </Typography>

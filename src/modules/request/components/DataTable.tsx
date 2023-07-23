@@ -40,6 +40,7 @@ import { green, red, amber, indigo } from '@material-ui/core/colors'
 import { createTheme, ThemeProvider, alpha, styled } from '@mui/material/styles'
 import ApproModal from './ApproModal'
 import PreviewModal from './PreviewModal'
+import PdfPreviewModal from './PdfPreviewModal'
 
 import * as requestActions from 'modules/request/actions'
 
@@ -256,6 +257,15 @@ export default function DataTable({ data, loading }: DataTableProps) {
     setIsOpenPreviewModal(false)
   }
 
+  const [isOpenPdfPreviewModal, setIsOpenPdfPreviewModal] = useState(false)
+  const handleOpenPdfPreviewModal = (filePath: string) => {
+    setIsOpenPdfPreviewModal(true)
+    setCurrentFilePath(filePath)
+  }
+  const handleClosePdfPreviewModal = () => {
+    setIsOpenPdfPreviewModal(false)
+  }
+
   const columns: GridColDef[] = [
     {
       field: 'order',
@@ -343,11 +353,11 @@ export default function DataTable({ data, loading }: DataTableProps) {
           return (
             <Stack direction='row' alignItems='center' spacing={1}>
               <Link
-                // href={filePath}
-                // target='_blank'
                 color='primary'
                 underline='hover'
-                onClick={() => handleOpenPreviewModal(filePath)}
+                onClick={() => {
+                  isPDF && handleOpenPdfPreviewModal(filePath)
+                }}
                 style={{ cursor: 'pointer' }}
               >
                 <Stack direction='row' alignItems='center' spacing={1}>
@@ -647,6 +657,11 @@ export default function DataTable({ data, loading }: DataTableProps) {
       <PreviewModal
         open={isOpenPreviewModal}
         handleClose={handleClosePreviewModal}
+        filePath={currentFilePath}
+      />
+      <PdfPreviewModal
+        open={isOpenPdfPreviewModal}
+        handleClose={handleClosePdfPreviewModal}
         filePath={currentFilePath}
       />
     </ThemeProvider>
