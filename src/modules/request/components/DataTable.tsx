@@ -36,7 +36,7 @@ import {
   InsertDriveFile as PDFIcon,
   Archive as ZipIcon,
 } from '@material-ui/icons'
-import { green, red, amber, indigo } from '@material-ui/core/colors'
+import { green, red, amber, lightBlue } from '@material-ui/core/colors'
 import { createTheme, ThemeProvider, alpha, styled } from '@mui/material/styles'
 import ApproModal from './ApproModal'
 import PreviewModal from './PreviewModal'
@@ -282,10 +282,18 @@ export default function DataTable({ data, loading }: DataTableProps) {
       headerAlign: 'center',
     },
     {
+      field: 'letterDatePrint',
+      headerName: 'วันที่',
+      width: 120,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
       field: 'submitDate',
       headerName: 'วันที่ยื่นคำร้อง',
       width: 220,
-      renderCell: renderCellExpand,
+      align: 'center',
+      headerAlign: 'center',
     },
     {
       field: 'note',
@@ -323,7 +331,7 @@ export default function DataTable({ data, loading }: DataTableProps) {
               >
                 <Stack direction='row' alignItems='center' spacing={1}>
                   <XLSXIcon fontSize='small' />
-                  <div>เปิดไฟล์</div>
+                  <div>เปิดไฟล์ XLSX</div>
                 </Stack>
               </Link>
             </Stack>
@@ -366,7 +374,7 @@ export default function DataTable({ data, loading }: DataTableProps) {
                   ) : (
                     <ZipIcon fontSize='small' />
                   )}
-                  <div>เปิดไฟล์</div>
+                  <div>{isPDF ? 'เปิดไฟล์ PDF' : 'ดาวน์โหลดไฟล์ ZIP'}</div>
                 </Stack>
               </Link>
             </Stack>
@@ -388,12 +396,12 @@ export default function DataTable({ data, loading }: DataTableProps) {
               <Stack direction='row' alignItems='center' spacing={1}>
                 <InProgressIcon
                   style={{
-                    color: indigo[800],
+                    color: lightBlue[800],
                   }}
                 />
                 <Typography
                   variant='body2'
-                  style={{ color: indigo[800], fontWeight: 600 }}
+                  style={{ color: lightBlue[800], fontWeight: 600 }}
                 >
                   อยู่ระหว่างดำเนินการ
                 </Typography>
@@ -501,6 +509,19 @@ export default function DataTable({ data, loading }: DataTableProps) {
           columns={columns}
           disableSelectionOnClick
           components={{ Toolbar: CustomToolbar }}
+          experimentalFeatures={{ columnGrouping: true }}
+          columnGroupingModel={[
+            {
+              groupId: 'letter',
+              headerName: 'หนังสือเข้า',
+              headerAlign: 'center',
+              children: [
+                { field: 'id' },
+                { field: 'letterDatePrint' },
+                { field: 'submitDate' },
+              ],
+            },
+          ]}
           localeText={{
             // Root
             noRowsLabel: 'ไม่มีข้อมูล',
