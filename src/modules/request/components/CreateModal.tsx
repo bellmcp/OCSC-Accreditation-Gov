@@ -27,6 +27,10 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from '@material-ui/core'
 import { Stack } from '@mui/material'
 import { TransitionProps } from '@material-ui/core/transitions'
@@ -90,6 +94,7 @@ export default function CreateModal({ isOpen, onCancel }: any) {
   const [XLSXFile, setXLSXFile] = useState(null)
   const [PDFFile, setPDFFile] = useState(null)
   const [letterDate, setLetterDate] = useState<string>(null)
+  const [submitData, setSubmitData] = useState<string>({})
 
   const validationSchema = yup.object({})
   const formik = useFormik({
@@ -105,16 +110,8 @@ export default function CreateModal({ isOpen, onCancel }: any) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(
-        requestActions.submitForm({
-          letterNo: get(values, 'letterNo', null),
-          letterDate: letterDate,
-          workplace: get(values, 'workplace', null),
-          contact: get(values, 'contact', null),
-          xlsxFile: XLSXFile,
-          pdfFile: PDFFile,
-        })
-      )
+      handleOpenConfirmModal()
+      setSubmitData(values)
     },
   })
 
@@ -131,12 +128,37 @@ export default function CreateModal({ isOpen, onCancel }: any) {
     <span style={{ color: theme.palette.error.main, marginLeft: 2 }}>*</span>
   )
 
-  const onCloseModal = () => {
+  const onResetForm = () => {
     formik.resetForm()
     setLetterDate(null)
     setXLSXFile(null)
     setPDFFile(null)
+  }
+
+  const onCloseModal = () => {
+    onResetForm()
     onCancel()
+  }
+
+  const [openConfirmModal, setOpenConfirmModal] = useState(false)
+  const handleOpenConfirmModal = () => {
+    setOpenConfirmModal(true)
+  }
+  const handleCloseConfirmModal = () => {
+    setOpenConfirmModal(false)
+  }
+  const handleAccept = () => {
+    dispatch(
+      requestActions.submitForm({
+        letterNo: get(submitData, 'letterNo', null),
+        letterDate: letterDate,
+        workplace: get(submitData, 'workplace', null),
+        contact: get(submitData, 'contact', null),
+        xlsxFile: XLSXFile,
+        pdfFile: PDFFile,
+      })
+    )
+    handleCloseConfirmModal()
   }
 
   return (
@@ -411,6 +433,32 @@ export default function CreateModal({ isOpen, onCancel }: any) {
             </Box>
           </form>
         </Container>
+      </Dialog>
+      <Dialog open={openConfirmModal} onClose={handleCloseConfirmModal}>
+        <DialogTitle>ยื่นคำร้อง?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            คุณแน่ใจหรือไม่ ว่าต้องการยื่นคำร้อง{' '}
+            <span
+              style={{ fontWeight: 500, color: theme.palette.text.primary }}
+            >
+              โปรดตรวจสอบข้อมูลให้ถูกต้อง
+            </span>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseConfirmModal} color='default'>
+            กลับ
+          </Button>
+          <Button
+            variant='contained'
+            onClick={handleAccept}
+            color='secondary'
+            autoFocus
+          >
+            ยืนยัน
+          </Button>
+        </DialogActions>
       </Dialog>
     </div>
   )
