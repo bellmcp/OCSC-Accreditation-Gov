@@ -7,7 +7,6 @@ import HomeRoutes from 'modules/home/Routes'
 import SearchRoutes from 'modules/search/Routes'
 import CurriculumRoutes from 'modules/curriculum/Routes'
 import InfoRoutes from 'modules/info/Routes'
-import PasswordRoutes from 'modules/edit/password/components/Routes'
 
 import NotFound from './NotFound'
 
@@ -23,11 +22,6 @@ export default function Routes() {
       <PrivateRoute path={`${PATH}/curriculum`} component={CurriculumRoutes} />
       <PrivateRoute path={`${PATH}/info`} component={InfoRoutes} />
       <PrivateRoute exact path={`${PATH}`} component={HomeRoutes} />
-      <PrivateRoute
-        exact
-        component={PasswordRoutes}
-        path={`${PATH}/edit/password`}
-      />
       <Redirect to={`${PATH}`}></Redirect>
       <Route>
         <NotFound />

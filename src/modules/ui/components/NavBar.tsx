@@ -290,7 +290,7 @@ export default function NavBar({
         <Container maxWidth='lg'>
           <Toolbar>
             {/* DRAWER TOGGLE */}
-            <Hidden smUp implementation='css'>
+            <Hidden mdUp implementation='css'>
               <IconButton
                 edge='start'
                 color='primary'
@@ -311,30 +311,32 @@ export default function NavBar({
             <div className={classes.grow} />
 
             {/* FULL DESKTOP NAVIGATION */}
-            <ThemeProvider theme={darkTheme}>
-              <NavMenu
-                useStyles={useLineNavigationMenuStyles}
-                color='inherit'
-                className={classes.navMenu}
-              >
-                {navigationItems.map((item) => (
-                  <NavItem
-                    active={activePage === item.id}
-                    className={
-                      activePage === item.id
-                        ? classes.navItemActive
-                        : classes.navItem
-                    }
-                    onClick={() => {
-                      history.push(item.url)
-                      setActivePage(item.id)
-                    }}
-                  >
-                    <Typography noWrap>{item.title}</Typography>
-                  </NavItem>
-                ))}
-              </NavMenu>
-            </ThemeProvider>
+            <Hidden smDown>
+              <ThemeProvider theme={darkTheme}>
+                <NavMenu
+                  useStyles={useLineNavigationMenuStyles}
+                  color='inherit'
+                  className={classes.navMenu}
+                >
+                  {navigationItems.map((item) => (
+                    <NavItem
+                      active={activePage === item.id}
+                      className={
+                        activePage === item.id
+                          ? classes.navItemActive
+                          : classes.navItem
+                      }
+                      onClick={() => {
+                        history.push(item.url)
+                        setActivePage(item.id)
+                      }}
+                    >
+                      <Typography noWrap>{item.title}</Typography>
+                    </NavItem>
+                  ))}
+                </NavMenu>
+              </ThemeProvider>
+            </Hidden>
 
             {/* DESKTOP USER DROPDOWN */}
             <div className={classes.sectionDesktop}>

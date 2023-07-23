@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { MeetingRoom as LogoutIcon, Lock as LockIcon } from '@material-ui/icons'
+import { MeetingRoom as LogoutIcon } from '@material-ui/icons'
 import { grey } from '@material-ui/core/colors'
 
 import { getCookie } from 'utils/cookies'
@@ -106,18 +106,9 @@ export default function NavDropdownMobile({
           }
         />
       </ListItem>
-      <Divider style={{ marginTop: 8 }} />
-      {isLoggedIn && (
-        <MenuItem onClick={linkToChangePassword}>
-          <ListItemIcon color='inherit'>
-            <LockIcon style={{ margin: 8, marginLeft: 4 }} />
-          </ListItemIcon>
-          <ListItemText primary='เปลี่ยนรหัสผ่าน'></ListItemText>
-        </MenuItem>
-      )}
       {isLoggedIn && (
         <>
-          <Divider />
+          <Divider style={{ marginTop: 8 }} />
           <MenuItem onClick={logout}>
             <ListItemIcon color='inherit'>
               <LogoutIcon style={{ margin: 8, marginLeft: 4 }} />

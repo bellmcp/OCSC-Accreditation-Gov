@@ -8,7 +8,6 @@ import homeReducer from 'modules/home/reducer'
 import searchReducer from 'modules/search/reducer'
 import personLetterReducer from 'modules/personLetter/reducer'
 import infoReducer from 'modules/info/reducer'
-import passwordReducer from 'modules/edit/password/reducer'
 import curriculumReducer from 'modules/curriculum/reducer'
 
 export default (history: any) =>
@@ -21,6 +20,5 @@ export default (history: any) =>
     search: searchReducer,
     info: infoReducer,
     personLetter: personLetterReducer,
-    password: passwordReducer,
     curriculum: curriculumReducer,
   })
