@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { get } from 'lodash'
-import * as uiActions from 'modules/ui/actions'
+import { handleApiError } from 'utils/error'
 
 const LOAD_HOME_CONTENT_REQUEST =
   'ocsc-person-accredit/home/LOAD_HOME_CONTENT_REQUEST'
@@ -30,16 +30,7 @@ function loadHomeContent() {
       dispatch({
         type: LOAD_HOME_CONTENT_FAILURE,
       })
-      dispatch(
-        uiActions.setFlashMessage(
-          `โหลดข้อมูลหน้าแรกไม่สำเร็จ เกิดข้อผิดพลาด ${get(
-            err,
-            'response.status',
-            'บางอย่าง'
-          )}`,
-          'error'
-        )
-      )
+      handleApiError(err, dispatch, 'โหลดข้อมูลประกาศและวิธีใช้งานไม่สำเร็จ')
     }
   }
 }

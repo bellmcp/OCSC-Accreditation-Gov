@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { get } from 'lodash'
 import { getCookie } from 'utils/cookies'
 import { handleApiError } from 'utils/error'
 
@@ -73,16 +72,7 @@ function searchPersonLetter({
       })
     } catch (err) {
       dispatch({ type: SEARCH_PERSON_LETTER_FAILURE })
-      dispatch(
-        uiActions.setFlashMessage(
-          `โหลดผลการค้นหาไม่สำเร็จ เกิดข้อผิดพลาด ${get(
-            err,
-            'response.status',
-            'บางอย่าง'
-          )}`,
-          'error'
-        )
-      )
+      handleApiError(err, dispatch, 'โหลดผลการค้นหาไม่สำเร็จ')
     }
   }
 }
@@ -114,16 +104,7 @@ function loadPersonLetter(id: number) {
       })
     } catch (err) {
       dispatch({ type: LOAD_PERSON_LETTER_FAILURE })
-      dispatch(
-        uiActions.setFlashMessage(
-          `โหลดผลการรับรองไม่สำเร็จ เกิดข้อผิดพลาด ${get(
-            err,
-            'response.status',
-            'บางอย่าง'
-          )}`,
-          'error'
-        )
-      )
+      handleApiError(err, dispatch, 'โหลดผลการรับรองไม่สำเร็จ')
     }
   }
 }
@@ -146,15 +127,10 @@ function loadUploadNote(id: number) {
       })
     } catch (err) {
       dispatch({ type: LOAD_UPLOAD_NOTE_FAILURE })
-      dispatch(
-        uiActions.setFlashMessage(
-          `โหลดหน้ายื่นคำร้องใหม่ไม่สำเร็จ เกิดข้อผิดพลาด ${get(
-            err,
-            'response.status',
-            'บางอย่าง'
-          )}`,
-          'error'
-        )
+      handleApiError(
+        err,
+        dispatch,
+        'โหลดคำแนะนำไฟล์ในหน้ายื่นคำร้องใหม่ไม่สำเร็จ'
       )
     }
   }

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { get } from 'lodash'
 import { getCookie } from 'utils/cookies'
+import { handleApiError } from 'utils/error'
 
 import * as uiActions from 'modules/ui/actions'
 
@@ -54,16 +54,7 @@ function searchPersonLetterItems({
       })
     } catch (err) {
       dispatch({ type: SEARCH_PERSON_LETTER_ITEMS_FAILURE })
-      dispatch(
-        uiActions.setFlashMessage(
-          `โหลดผลการค้นหาไม่สำเร็จ เกิดข้อผิดพลาด ${get(
-            err,
-            'response.status',
-            'บางอย่าง'
-          )}`,
-          'error'
-        )
-      )
+      handleApiError(err, dispatch, 'โหลดผลการค้นหาไม่สำเร็จ')
     }
   }
 }
