@@ -91,8 +91,9 @@ export default function ApproModal({ isOpen, onCancel }: any) {
         TransitionComponent={Transition}
       >
         <AppBar
-          style={{ position: 'relative', paddingLeft: 24, paddingRight: 24 }}
+          style={{ paddingLeft: 24, paddingRight: 24 }}
           color='secondary'
+          position='sticky'
         >
           <Toolbar>
             <Typography
