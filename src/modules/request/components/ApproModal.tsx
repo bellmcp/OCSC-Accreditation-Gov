@@ -16,7 +16,8 @@ import { Stack } from '@mui/material'
 import { TransitionProps } from '@material-ui/core/transitions'
 import { Close as CloseIcon } from '@material-ui/icons'
 
-import ApproTable from './ApproTable'
+// import ApproTable from './ApproTable'
+import ApproTable2 from './ApproTable2'
 import Loading from 'modules/ui/components/Loading'
 
 const Transition = React.forwardRef(function Transition(
@@ -181,7 +182,8 @@ export default function ApproModal({ isOpen, onCancel }: any) {
                 </>
               ))}
             </Grid>
-            <ApproTable data={personLetterItems} loading={isLoading} />
+            {/* <ApproTable data={personLetterItems} loading={isLoading} /> */}
+            <ApproTable2 data={personLetterItems} />
           </DialogContent>
         )}
       </Dialog>
