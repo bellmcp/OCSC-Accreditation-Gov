@@ -274,11 +274,11 @@ export default function DataTable({ data, loading }: DataTableProps) {
       headerAlign: 'center',
     },
     {
-      field: 'id',
+      field: 'letterNo',
       headerName: 'เลขที่',
-      width: 100,
-      align: 'center',
+      width: 150,
       headerAlign: 'center',
+      renderCell: renderCellExpand,
     },
     {
       field: 'letterDatePrint',
