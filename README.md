@@ -1,4 +1,4 @@
-# OCSC e-Accreditation (Admin)
+# OCSC e-Accreditation (Government)
 
 # License
 
