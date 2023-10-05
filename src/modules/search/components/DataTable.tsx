@@ -100,39 +100,22 @@ const columns: GridColDef[] = [
     renderCell: renderCellExpand,
   },
   {
-    field: 'letterNo',
-    headerName: 'เลขที่',
-    width: 120,
+    field: 'circularLetter',
+    headerName: 'อ้างอิงหนังสือเวียน',
+    width: 220,
     renderCell: renderCellExpand,
-    headerAlign: 'center',
   },
   {
-    field: 'letterDatePrint',
-    headerName: 'วันที่',
-    width: 120,
-    headerAlign: 'center',
-    align: 'center',
-  },
-  {
-    field: 'replyNo',
-    headerName: 'เลขที่',
-    width: 120,
+    field: 'govLetter',
+    headerName: 'หนังสือจากส่วนราชการ',
+    width: 220,
     renderCell: renderCellExpand,
-    headerAlign: 'center',
   },
   {
-    field: 'replyDatePrint',
-    headerName: 'วันที่',
-    width: 120,
-    headerAlign: 'center',
-    align: 'center',
-  },
-  {
-    field: 'id',
-    headerName: 'เลขที่อ้างอิง',
-    width: 120,
-    align: 'center',
-    headerAlign: 'center',
+    field: 'ocscLetter',
+    headerName: 'หนังสือจากสำนักงาน ก.พ.',
+    width: 220,
+    renderCell: renderCellExpand,
   },
 ]
 
@@ -303,21 +286,6 @@ export default function DataTable({ data, loading }: DataTableProps) {
           columns={columns}
           disableSelectionOnClick
           components={{ Toolbar: CustomToolbar }}
-          experimentalFeatures={{ columnGrouping: true }}
-          columnGroupingModel={[
-            {
-              groupId: 'letter',
-              headerName: 'หนังสือเข้า',
-              headerAlign: 'center',
-              children: [{ field: 'letterNo' }, { field: 'letterDatePrint' }],
-            },
-            {
-              groupId: 'reply',
-              headerName: 'หนังสือออก',
-              headerAlign: 'center',
-              children: [{ field: 'replyNo' }, { field: 'replyDatePrint' }],
-            },
-          ]}
           localeText={{
             // Root
             noRowsLabel: 'ไม่มีข้อมูล',
