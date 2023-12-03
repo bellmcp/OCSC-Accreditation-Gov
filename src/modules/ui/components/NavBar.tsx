@@ -274,11 +274,17 @@ export default function NavBar({
   const logout = () => {
     handleMenuClose()
     eraseCookie('token')
-    eraseCookie('firstname')
-    eraseCookie('lastname')
+    eraseCookie('firstName')
+    eraseCookie('lastName')
     eraseCookie('id')
     eraseCookie('workplace')
     eraseCookie('contact')
+    eraseCookie('seal') // for ocsc job
+    eraseCookie('ministry') // for ocsc job
+    eraseCookie('ministryId') // for ocsc job
+    eraseCookie('department') // for ocsc job
+    eraseCookie('departmentId') // for ocsc job
+
     dispatch(uiActions.setFlashMessage('ออกจากระบบเรียบร้อยแล้ว', 'success'))
     setTimeout(() => {
       history.push(`${PATH}/login`)

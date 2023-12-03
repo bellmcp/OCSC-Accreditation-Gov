@@ -36,7 +36,7 @@ function loadLogin(userInfo: any, role: string) {
           role: role,
         },
         {
-          baseURL: process.env.REACT_APP_PORTAL_API_URL,
+          baseURL: process.env.REACT_APP_LOGIN_API_URL,
         }
       )
       dispatch({
@@ -48,11 +48,17 @@ function loadLogin(userInfo: any, role: string) {
         },
       })
       setCookie('token', get(result, 'data.token', ''), 3)
-      setCookie('firstname', get(result, 'data.firstname', ''), 3)
-      setCookie('lastname', get(result, 'data.lastname', ''), 3)
+      setCookie('firstName', get(result, 'data.firstName', ''), 3)
+      setCookie('lastName', get(result, 'data.lastName', ''), 3)
       setCookie('id', String(get(result, 'data.id', 0)), 3)
       setCookie('workplace', String(get(result, 'data.workplace', '')), 3)
       setCookie('contact', String(get(result, 'data.contact', '')), 3)
+      setCookie('seal', String(get(result, 'data.seal', 0)), 3) // for ocsc job
+      setCookie('ministry', String(get(result, 'data.ministry', 0)), 3) // for ocsc job
+      setCookie('ministryId', get(result, 'data.ministryId', ''), 3) // for ocsc job
+      setCookie('department', String(get(result, 'data.department', 0)), 3) // for ocsc job
+      setCookie('departmentId', get(result, 'data.departmentId', ''), 3) // for ocsc job
+
       dispatch(push(`${PATH}`))
       dispatch(uiActions.setFlashMessage('เข้าสู่ระบบเรียบร้อยแล้ว', 'success'))
     } catch (err) {

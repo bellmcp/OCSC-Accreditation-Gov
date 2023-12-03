@@ -207,13 +207,6 @@ export default function Login() {
                 value={values.password}
                 onChange={handleChange('password')}
               />
-              <Button
-                color='secondary'
-                onClick={linkToForgotPassword}
-                disabled={forgetPasswordUrl === ''}
-              >
-                ลืมรหัสผ่าน
-              </Button>
               <FormHelperText
                 error
                 style={{ fontSize: '0.9rem', textAlign: 'center' }}
@@ -232,7 +225,7 @@ export default function Login() {
                 <b>เข้าสู่ระบบ</b>
               </Button>
             </form>
-            <Box mt={4}>
+            {/* <Box mt={4}>
               <Divider />
             </Box>
             <Box my={3}>
@@ -250,7 +243,7 @@ export default function Login() {
                   สมัครสมาชิก
                 </Button>
               </Grid>
-            </Box>
+            </Box> */}
           </Paper>
         </Grid>
       </Grid>
