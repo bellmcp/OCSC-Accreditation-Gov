@@ -55,8 +55,8 @@ export default function NavDropdownDesktop({
   const classes = useStyles()
 
   const fullnameLabel = `${
-    getCookie('firstname') ? getCookie('firstname') : ''
-  } ${getCookie('lastname') ? getCookie('lastname') : ''}`
+    getCookie('firstName') ? getCookie('firstName') : ''
+  } ${getCookie('lastName') ? getCookie('lastName') : ''}`
 
   const workplaceLabel = getCookie('workplace') ? getCookie('workplace') : ''
 

@@ -217,7 +217,7 @@ export default function NavBar({
   const isLoggedIn = isLogin()
 
   const getUsernameLabel = () => {
-    if (isLoggedIn) return getCookie('firstname')
+    if (isLoggedIn) return getCookie('firstName')
     else return 'เข้าสู่ระบบ'
   }
   const usernameLabel = getUsernameLabel()
