@@ -272,9 +272,10 @@ export default function CreateModal({
                     </Grid>
                     <Grid xs={12} md={5}>
                       <TextField
+                        disabled
                         id='workplace'
                         name='workplace'
-                        placeholder='หน่วยงาน'
+                        placeholder='ชื่อกรม'
                         value={formik.values.workplace}
                         onChange={formik.handleChange}
                         variant='outlined'
