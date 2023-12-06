@@ -19,6 +19,7 @@ export default function Routes() {
       </Route>
       <PrivateRoute path={`${PATH}/search`} component={SearchRoutes} />
       <PrivateRoute path={`${PATH}/request`} component={RequestRoutes} />
+      <PrivateRoute exact path={`${PATH}/bypasslogin`} component={HomeRoutes} />
       <PrivateRoute exact path={`${PATH}`} component={HomeRoutes} />
       <Redirect to={`${PATH}`}></Redirect>
       <Route>
