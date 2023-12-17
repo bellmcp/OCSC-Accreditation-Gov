@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -14,8 +14,8 @@ import {
   Toolbar,
   Grid,
   Container,
-  Box,
-  Divider,
+  // Box,
+  // Divider,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -23,7 +23,7 @@ import {
   Lock as LockIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
-  ArrowForwardIos as ArrowForwardIcon,
+  // ArrowForwardIos as ArrowForwardIcon,
 } from '@material-ui/icons'
 
 import * as actions from '../actions'
@@ -67,8 +67,8 @@ export default function Login() {
 
   const {
     messageLogin,
-    forgetPasswordUrl = '',
-    registrationUrl = '',
+    // forgetPasswordUrl = '',
+    // registrationUrl = '',
   } = useSelector((state: any) => state.login)
 
   const handleChange =
@@ -105,17 +105,17 @@ export default function Login() {
     dispatch(actionLogin)
   }
 
-  const linkToForgotPassword = () => {
-    window.open(forgetPasswordUrl, '_blank')
-  }
+  // const linkToForgotPassword = () => {
+  //   window.open(forgetPasswordUrl, '_blank')
+  // }
 
-  const linkToSignUp = () => {
-    window.open(registrationUrl, '_blank')
-  }
+  // const linkToSignUp = () => {
+  //   window.open(registrationUrl, '_blank')
+  // }
 
-  useEffect(() => {
-    dispatch(actions.loadLoginLink())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(actions.loadLoginLink())
+  // }, [dispatch])
 
   return (
     <Container maxWidth='lg'>
