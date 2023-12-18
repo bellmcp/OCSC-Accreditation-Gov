@@ -18,6 +18,8 @@ import Footer from './Footer'
 
 import { navigationItems } from '../navigation'
 
+const PATH = process.env.REACT_APP_BASE_PATH
+
 export default function Layout() {
   const { pathname } = useLocation()
   const PATH = process.env.REACT_APP_BASE_PATH
@@ -28,12 +30,17 @@ export default function Layout() {
   const closeFlashMessage = () => dispatch(actions.clearFlashMessage())
 
   useEffect(() => {
-    const currentNavigationItem = navigationItems.find((navigationItem: any) => {
-      return navigationItem.url === pathname
-    })
+    const currentNavigationItem = navigationItems.find(
+      (navigationItem: any) => {
+        return navigationItem.url === pathname
+      }
+    )
     currentNavigationItem
       ? setActivePage(currentNavigationItem.id)
       : setActivePage(999)
+    if (pathname === `${PATH}/bypasslogin`) {
+      setActivePage(0)
+    }
   }, [pathname]) //eslint-disable-line
 
   const [activePage, setActivePage] = useState(0)
