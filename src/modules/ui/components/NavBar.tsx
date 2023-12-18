@@ -286,10 +286,16 @@ export default function NavBar({
     eraseCookie('departmentId') // for ocsc job
 
     dispatch(uiActions.setFlashMessage('ออกจากระบบเรียบร้อยแล้ว', 'success'))
-    setTimeout(() => {
-      history.push(`${PATH}/login`)
-    }, 2000)
-    window.location.reload()
+    const from = sessionStorage.getItem('from')
+    if (from !== '' && from !== null && from !== undefined) {
+      sessionStorage.removeItem('from')
+      window.location.href = from
+    } else {
+      setTimeout(() => {
+        history.push(`${PATH}/login`)
+        window.location.reload()
+      }, 2000)
+    }
   }
 
   return (

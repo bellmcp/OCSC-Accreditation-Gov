@@ -18,8 +18,6 @@ import Footer from './Footer'
 
 import { navigationItems } from '../navigation'
 
-const PATH = process.env.REACT_APP_BASE_PATH
-
 export default function Layout() {
   const { pathname } = useLocation()
   const PATH = process.env.REACT_APP_BASE_PATH
@@ -42,6 +40,14 @@ export default function Layout() {
       setActivePage(0)
     }
   }, [pathname]) //eslint-disable-line
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search)
+    const from = query.get('from')
+    if (from !== '' && from !== null && from !== undefined) {
+      sessionStorage.setItem('from', from)
+    }
+  }, [])
 
   const [activePage, setActivePage] = useState(0)
 
