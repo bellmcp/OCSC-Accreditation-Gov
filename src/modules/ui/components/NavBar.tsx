@@ -322,6 +322,13 @@ export default function NavBar({
               onClick={linkToHome}
               style={{ filter: 'saturate(1.3)' }}
             />
+            <Typography
+              variant='body1'
+              color='textPrimary'
+              style={{ fontWeight: 600 }}
+            >
+              ส่วนราชการ
+            </Typography>
             <div className={classes.grow} />
 
             {/* FULL DESKTOP NAVIGATION */}
