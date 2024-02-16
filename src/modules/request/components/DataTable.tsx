@@ -35,7 +35,7 @@ import {
   InsertDriveFile as PDFIcon,
   Archive as ZipIcon,
 } from '@material-ui/icons'
-import { green, red, amber, lightBlue } from '@material-ui/core/colors'
+import { green, red, amber, lightBlue, purple } from '@material-ui/core/colors'
 import { createTheme, ThemeProvider, alpha, styled } from '@mui/material/styles'
 import ApproModal from './ApproModal'
 import PreviewModal from './PreviewModal'
@@ -276,7 +276,7 @@ export default function DataTable({ data, loading }: DataTableProps) {
     {
       field: 'letterNo',
       headerName: 'เลขที่',
-      width: 150,
+      minWidth: 250,
       headerAlign: 'center',
       renderCell: renderCellExpand,
     },
@@ -454,6 +454,22 @@ export default function DataTable({ data, loading }: DataTableProps) {
                   style={{ color: red[800], fontWeight: 600 }}
                 >
                   ยกเลิก
+                </Typography>
+              </Stack>
+            )
+          case 'ให้ยื่นคำร้องใหม่':
+            return (
+              <Stack direction='row' alignItems='center' spacing={1}>
+                <CancelIcon
+                  style={{
+                    color: purple[800],
+                  }}
+                />
+                <Typography
+                  variant='body2'
+                  style={{ color: purple[800], fontWeight: 600 }}
+                >
+                  ให้ยื่นคำร้องใหม่
                 </Typography>
               </Stack>
             )

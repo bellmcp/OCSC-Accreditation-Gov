@@ -36,6 +36,7 @@ function searchPersonLetter({
   status2,
   status3,
   status4,
+  status5,
 }: any) {
   return async (dispatch: any) => {
     const token = getCookie('token')
@@ -50,6 +51,7 @@ function searchPersonLetter({
           status2,
           status3,
           status4,
+          status5,
         },
         headers: {
           Authorization: `Bearer ${token}`,

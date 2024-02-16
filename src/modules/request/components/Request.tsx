@@ -116,6 +116,7 @@ export default function Request() {
       status2: true,
       status3: true,
       status4: true,
+      status5: true,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -127,6 +128,7 @@ export default function Request() {
         status2,
         status3,
         status4,
+        status5,
       }
       submitSearch(data)
       setSubmitData(data)
@@ -156,6 +158,7 @@ export default function Request() {
   const [status2, setStatus2] = useState<boolean>(true)
   const [status3, setStatus3] = useState<boolean>(true)
   const [status4, setStatus4] = useState<boolean>(true)
+  const [status5, setStatus5] = useState<boolean>(true)
 
   const handleChangeStatus1 = (event: any) => {
     setStatus1(event.target.checked)
@@ -171,6 +174,10 @@ export default function Request() {
 
   const handleChangeStatus4 = (event: any) => {
     setStatus4(event.target.checked)
+  }
+
+  const handleChangeStatus5 = (event: any) => {
+    setStatus5(event.target.checked)
   }
 
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -430,6 +437,17 @@ export default function Request() {
                           />
                         }
                         label='ยกเลิก'
+                        style={{ marginRight: 46 }}
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={status5}
+                            onChange={handleChangeStatus5}
+                            name='resubmit'
+                          />
+                        }
+                        label='ให้ยื่นคำร้องใหม่'
                       />
                     </FormGroup>
                   </Grid>
