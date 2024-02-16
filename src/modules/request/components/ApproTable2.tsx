@@ -45,9 +45,9 @@ function Row(props: any) {
         <TableCell style={{ verticalAlign: 'top' }}>
           {getLabel(row, 'appro')}
         </TableCell>
-        <TableCell style={{ verticalAlign: 'top' }}>
+        {/* <TableCell style={{ verticalAlign: 'top' }}>
           {getLabel(row, 'note')}
-        </TableCell>
+        </TableCell> */}
       </TableRow>
     </React.Fragment>
   )
@@ -114,7 +114,7 @@ export default function ApproTable({ data }: SearchResultTableType) {
             >
               ผลการรับรอง
             </TableCell>
-            <TableCell
+            {/* <TableCell
               style={{
                 verticalAlign: 'top',
                 lineHeight: '1.2',
@@ -122,7 +122,7 @@ export default function ApproTable({ data }: SearchResultTableType) {
               }}
             >
               หมายเหตุ
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>

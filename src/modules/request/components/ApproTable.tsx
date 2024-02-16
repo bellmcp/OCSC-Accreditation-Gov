@@ -93,12 +93,12 @@ const columns: GridColDef[] = [
     width: 475,
     renderCell: renderCellExpand,
   },
-  {
-    field: 'note',
-    headerName: 'หมายเหตุ',
-    width: 550,
-    renderCell: renderCellExpand,
-  },
+  // {
+  //   field: 'note',
+  //   headerName: 'หมายเหตุ',
+  //   width: 550,
+  //   renderCell: renderCellExpand,
+  // },
 ]
 
 interface GridCellExpandProps {
