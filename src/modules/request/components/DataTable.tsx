@@ -76,8 +76,8 @@ const theme = createTheme(
       fontFamily: ['Prompt', 'sans-serif'].join(','),
     },
     palette: {
-      primary: { main: '#09348b' },
-      secondary: { main: '#17aacf' },
+      primary: { main: '#00695c' },
+      secondary: { main: '#00bfa5' },
     },
   },
   bgBG

@@ -100,8 +100,8 @@ export default function Home() {
               style={{
                 borderRadius: 16,
                 padding: 24,
-                boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
-                border: '1px solid rgb(204 242 251)',
+                boxShadow: '0 0 20px 0 rgba(0,191,165,0.1)',
+                border: '1px solid rgba(0,191,165,0.3)',
               }}
             >
               {announcement !== '' ? (
@@ -146,8 +146,8 @@ export default function Home() {
               style={{
                 borderRadius: 16,
                 padding: 24,
-                boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
-                border: '1px solid rgb(204 242 251)',
+                boxShadow: '0 0 20px 0 rgba(0,191,165,0.1)',
+                border: '1px solid rgba(0,191,165,0.3)',
               }}
             >
               {howTo !== '' ? (

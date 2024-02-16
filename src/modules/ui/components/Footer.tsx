@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     padding: theme.spacing(6, 2),
     marginTop: 'auto',
-    backgroundImage: `linear-gradient(180deg, #09348b, #06225b)`,
+    backgroundImage: `linear-gradient(180deg, #00796b, #004d40)`,
   },
   link: {
     color: process.env.REACT_APP_TERTIARY_COLOR_HEX,
