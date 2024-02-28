@@ -94,12 +94,6 @@ const columns: GridColDef[] = [
     renderCell: renderCellExpand,
   },
   {
-    field: 'note',
-    headerName: 'หมายเหตุ',
-    width: 375,
-    renderCell: renderCellExpand,
-  },
-  {
     field: 'circularLetter',
     headerName: 'อ้างอิงหนังสือเวียน',
     width: 220,
