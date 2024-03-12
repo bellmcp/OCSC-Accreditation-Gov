@@ -22,7 +22,7 @@ const theme = createTheme({
       main: process.env.REACT_APP_SECONDARY_COLOR_HEX,
     },
     background: {
-      default: '#f7feff',
+      default: '#e0f2f1cc',
     },
   },
 })
