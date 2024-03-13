@@ -295,14 +295,6 @@ export default function DataTable({ data, loading }: DataTableProps) {
       headerAlign: 'center',
     },
     {
-      field: 'note',
-      headerName:
-        'ชื่อ-นามสกุล หมายเลขโทรศัพท์ หรือ อีเมล เจ้าหน้าที่ผู้รับผิดชอบ',
-      width: 450,
-      headerAlign: 'center',
-      renderCell: renderCellExpand,
-    },
-    {
       field: 'xlsxFile',
       headerName: 'ไฟล์แนบสเปรดชีต XLSX',
       width: 200,
@@ -477,6 +469,13 @@ export default function DataTable({ data, loading }: DataTableProps) {
             return <></>
         }
       },
+    },
+    {
+      field: 'note',
+      headerName: 'หมายเหตุ',
+      width: 450,
+      headerAlign: 'center',
+      renderCell: renderCellExpand,
     },
     {
       field: 'appro',

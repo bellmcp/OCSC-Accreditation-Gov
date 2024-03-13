@@ -140,6 +140,20 @@ export default function Request() {
   }
 
   useEffect(() => {
+    const { letterNo, status1, status2, status3, status4, status5 } =
+      formik.values
+    const data = {
+      letterNo,
+      startDate: startDate,
+      endDate: endDate,
+      status1,
+      status2,
+      status3,
+      status4,
+      status5,
+    }
+    submitSearch(data)
+
     return () => {
       dispatch(requestActions.clearSearchResult())
     }
