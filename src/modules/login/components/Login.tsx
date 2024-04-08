@@ -30,7 +30,7 @@ import * as actions from '../actions'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: 'transparent',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',

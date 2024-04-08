@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
       paddingTop: theme.spacing(3),
+      minHeight: 600,
     },
     sectionTitle: {
       fontSize: '1.7rem',

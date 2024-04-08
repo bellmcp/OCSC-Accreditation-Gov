@@ -150,6 +150,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: theme.spacing(4),
       height: theme.spacing(4),
       backgroundColor: grey[700],
+      color: theme.palette.common.white,
     },
     loggedIn: {
       color: theme.palette.common.white,
