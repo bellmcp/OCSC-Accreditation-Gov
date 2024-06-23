@@ -126,10 +126,6 @@ export default function SearchPersonLetterItems() {
     }
   }, [dispatch])
 
-  const note = (
-    <span style={{ color: theme.palette.primary.main, marginLeft: 2 }}>*</span>
-  )
-
   const [searchResults, setSearchResults] = useState([])
   const [tableMaxWidth, setTableMaxWidth] = useState<any>('lg')
   const [date, setDate] = useState<string>(null)
@@ -242,7 +238,7 @@ export default function SearchPersonLetterItems() {
                   variant='h6'
                   className={classes.sectionTitle}
                 >
-                  ค้นหาหนังสือรับรองคุณวุฒิที่ยื่นผ่านช่องทางอิเล็กทรอนิกส์
+                  ค้นหาหนังสือรับรองคุณวุฒิ
                 </Typography>
               </Grid>
             </Grid>
@@ -265,7 +261,7 @@ export default function SearchPersonLetterItems() {
                       color='primary'
                       style={{ fontWeight: 500 }}
                     >
-                      <b>*</b> ไม่จำเป็นต้องระบุข้อมูลที่ใช้ค้นหาครบทุกฟิลด์
+                      ไม่จำเป็นต้องระบุข้อมูลที่ใช้ค้นหาครบทุกฟิลด์
                     </Typography>
                   </Grid>
                 </Grid>
@@ -277,7 +273,7 @@ export default function SearchPersonLetterItems() {
                       style={{ fontWeight: 600 }}
                       gutterBottom
                     >
-                      เลขที่หนังสือนำส่งสำนักงาน ก.พ.{note}
+                      เลขที่หนังสือนำส่งสำนักงาน ก.พ.
                     </Typography>
                   </Grid>
                   <Grid xs={12} md={3}>
@@ -302,7 +298,7 @@ export default function SearchPersonLetterItems() {
                       style={{ fontWeight: 600 }}
                       gutterBottom
                     >
-                      ลงวันที่{note}
+                      ลงวันที่
                     </Typography>
                   </Grid>
                   <Grid xs={12} md={3}>
@@ -317,7 +313,7 @@ export default function SearchPersonLetterItems() {
                       style={{ fontWeight: 600 }}
                       gutterBottom
                     >
-                      เลขประจำตัวประชาชน{note}
+                      เลขประจำตัวประชาชน
                     </Typography>
                   </Grid>
                   <Grid xs={12} md={3}>
@@ -342,7 +338,7 @@ export default function SearchPersonLetterItems() {
                       style={{ fontWeight: 600 }}
                       gutterBottom
                     >
-                      ชื่อ หรือ นามสกุล{note}
+                      ชื่อ หรือ นามสกุล
                     </Typography>
                   </Grid>
                   <Grid xs={12} md={3}>
