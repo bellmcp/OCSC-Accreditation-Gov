@@ -234,7 +234,7 @@ export default function CreateModal({
                       <TextField
                         id='letterNo'
                         name='letterNo'
-                        placeholder='เลขที่หนังสือนำส่งสำนักงาน ก.พ.'
+                        placeholder='ลับ ด่วนที่สุด ที่ นร 1004/123'
                         value={formik.values.letterNo}
                         onChange={formik.handleChange}
                         variant='outlined'
@@ -299,6 +299,7 @@ export default function CreateModal({
                     </Grid>
                     <Grid xs={12} md={5}>
                       <TextField
+                        disabled
                         id='contact'
                         name='contact'
                         placeholder='ชื่อ-นามสกุล หมายเลขโทรศัพท์ หรือ อีเมล เจ้าหน้าที่ผู้รับผิดชอบ'
@@ -347,7 +348,7 @@ export default function CreateModal({
                         1. ไฟล์สเปรดชีต{note}
                       </Typography>
                     </Grid>
-                    <Grid xs={12} md={5}>
+                    <Grid xs={12} md={9}>
                       <Stack direction='column' spacing={1}>
                         {xlsxUploadNote !== '' && (
                           <Typography
@@ -386,7 +387,7 @@ export default function CreateModal({
                         2. ไฟล์ PDF หรือ ZIP{note}
                       </Typography>
                     </Grid>
-                    <Grid xs={12} md={5}>
+                    <Grid xs={12} md={9}>
                       <Stack direction='column' spacing={1}>
                         {pdfUploadNote !== '' && (
                           <Typography
