@@ -157,7 +157,7 @@ function submitForm({
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
         reject(new Error('Timeout error'))
-      }, 2000) // 3 minutes timeout (180000)
+      }, 180000) // 3 minutes timeout (180000)
     })
 
     try {
