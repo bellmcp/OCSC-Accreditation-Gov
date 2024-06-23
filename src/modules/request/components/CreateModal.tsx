@@ -147,9 +147,7 @@ export default function CreateModal({
   }
 
   const onAfterSubmitSuccess = () => {
-    // hide loading indicator
     setIsFileUploading(false)
-    console.log('finished!!! upload')
     onCloseModal()
     submitSearch(searchQuery) // refetch search result
   }
