@@ -191,7 +191,7 @@ export default function CreateModal({
               variant='h6'
               component='div'
             >
-              ยื่นคำร้องขอตรวจสอบคุณวุฒิผ่านช่องทางอิเล็กทรอนิกส์
+              เพิ่มคำร้อง
             </Typography>
             <Stack direction='row' spacing={1}>
               <IconButton

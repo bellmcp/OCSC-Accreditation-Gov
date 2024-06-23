@@ -8,7 +8,7 @@ export const navigationItems = [
   },
   {
     id: 1,
-    title: 'คำร้องขอตรวจสอบคุณวุฒิ',
+    title: 'ยื่นคำร้องขอตรวจสอบคุณวุฒิ',
     url: `${PATH}/request`,
   },
   {

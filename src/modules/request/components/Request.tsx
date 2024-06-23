@@ -247,7 +247,7 @@ export default function Request() {
                   variant='h6'
                   className={classes.sectionTitle}
                 >
-                  ผลการค้นหา
+                  ผลการค้นหา (จากใหม่ไปเก่า)
                 </Typography>
                 <Stack direction='row' spacing={2}>
                   <Hidden mdDown>
@@ -308,8 +308,7 @@ export default function Request() {
                   align={matches ? 'left' : 'center'}
                   className={classes.sectionTitle}
                 >
-                  คำร้องขอตรวจสอบคุณวุฒิที่ยื่นผ่านช่องทางอิเล็กทรอนิกส์
-                  (จากใหม่ไปเก่า)
+                  ยื่นคำร้องขอตรวจสอบคุณวุฒิ
                 </Typography>
               </Grid>
               <Grid
@@ -327,7 +326,7 @@ export default function Request() {
                   startIcon={<AddIcon />}
                   onClick={handleClickCreateRequest}
                 >
-                  ยื่นคำร้องใหม่
+                  เพิ่มคำร้อง
                 </Button>
               </Grid>
             </Grid>
