@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { get } from 'lodash'
 import { getCookie } from 'utils/cookies'
 import { handleApiError } from 'utils/error'
@@ -147,6 +147,7 @@ function submitForm({
   xlsxFile,
   pdfFile,
   successCallbackFunction,
+  errorCallbackFunction,
 }: any) {
   return async (dispatch: any) => {
     const token = getCookie('token')
@@ -190,6 +191,7 @@ function submitForm({
       if (successCallbackFunction) successCallbackFunction()
     } catch (err) {
       dispatch({ type: SUBMIT_FORM_FAILURE })
+      if (errorCallbackFunction) errorCallbackFunction()
 
       if (get(err, 'message', '') === 'Timeout error') {
         handleApiError(err, dispatch, 'อัปโหลดไฟล์ไม่สำเร็จ')

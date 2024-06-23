@@ -31,6 +31,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  CircularProgress,
 } from '@material-ui/core'
 import { Stack } from '@mui/material'
 import { TransitionProps } from '@material-ui/core/transitions'
@@ -146,8 +147,15 @@ export default function CreateModal({
   }
 
   const onAfterSubmitSuccess = () => {
+    // hide loading indicator
+    setIsFileUploading(false)
+    console.log('finished!!! upload')
     onCloseModal()
     submitSearch(searchQuery) // refetch search result
+  }
+
+  const onAfterSubmitError = () => {
+    setIsFileUploading(false)
   }
 
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
@@ -167,10 +175,14 @@ export default function CreateModal({
         xlsxFile: XLSXFile,
         pdfFile: PDFFile,
         successCallbackFunction: onAfterSubmitSuccess,
+        errorCallbackFunction: onAfterSubmitError,
       })
     )
     handleCloseConfirmModal()
+    setIsFileUploading(true)
   }
+
+  const [isFileUploading, setIsFileUploading] = useState<boolean>(false)
 
   return (
     <div>
@@ -453,8 +465,8 @@ export default function CreateModal({
       <Dialog open={openConfirmModal} onClose={handleCloseConfirmModal}>
         <DialogTitle>ยื่นคำร้อง?</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            คุณแน่ใจหรือไม่ ว่าต้องการยื่นคำร้อง{' '}
+          <DialogContentText style={{ minWidth: 500 }}>
+            คุณแน่ใจหรือไม่ว่าต้องการยื่นคำร้อง{' '}
             <span
               style={{ fontWeight: 500, color: theme.palette.text.primary }}
             >
@@ -475,6 +487,25 @@ export default function CreateModal({
             ยืนยัน
           </Button>
         </DialogActions>
+      </Dialog>
+      <Dialog
+        open={isFileUploading}
+        PaperProps={{
+          style: { borderRadius: 25 },
+        }}
+      >
+        <Stack
+          direction='column'
+          spacing={2}
+          alignItems='center'
+          justifyContent='center'
+          style={{ height: 175, width: 175 }}
+        >
+          <CircularProgress />
+          <Typography variant='body2' color='initial'>
+            กำลังอัพโหลดไฟล์...
+          </Typography>
+        </Stack>
       </Dialog>
     </div>
   )
