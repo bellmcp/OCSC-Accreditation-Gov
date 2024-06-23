@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import { get } from 'lodash'
 import { getCookie } from 'utils/cookies'
 import { handleApiError } from 'utils/error'
 
@@ -150,6 +151,14 @@ function submitForm({
   return async (dispatch: any) => {
     const token = getCookie('token')
     dispatch({ type: SUBMIT_FORM_REQUEST })
+
+    // Create a timeout promise that rejects after 3 minutes (180 seconds)
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error('Timeout error'))
+      }, 2000) // 3 minutes timeout (180000)
+    })
+
     try {
       var bodyFormData = new FormData()
       bodyFormData.append('letterNo', letterNo)
@@ -159,23 +168,34 @@ function submitForm({
       bodyFormData.append('xlsxFile', xlsxFile)
       bodyFormData.append('pdfFile', pdfFile)
 
-      var { data } = await axios.post('personletters', bodyFormData, {
+      // Axios request wrapped in Promise.race to include the timeout
+      const axiosPromise = axios.post('personletters', bodyFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
       })
+
+      // Wait for either the axios request or timeout to resolve
+      const res = await Promise.race([axiosPromise, timeoutPromise])
+
       dispatch({
         type: SUBMIT_FORM_SUCCESS,
         payload: {
-          message: data,
+          message: get(res, 'data'),
         },
       })
+
       dispatch(uiActions.setFlashMessage('ยื่นคำร้องสำเร็จ', 'success'))
-      successCallbackFunction && successCallbackFunction()
+      if (successCallbackFunction) successCallbackFunction()
     } catch (err) {
       dispatch({ type: SUBMIT_FORM_FAILURE })
-      handleApiError(err, dispatch, 'ยื่นคำร้องไม่สำเร็จ')
+
+      if (get(err, 'message', '') === 'Timeout error') {
+        handleApiError(err, dispatch, 'อัปโหลดไฟล์ไม่สำเร็จ')
+      } else {
+        handleApiError(err, dispatch, 'ยื่นคำร้องไม่สำเร็จ')
+      }
     }
   }
 }
