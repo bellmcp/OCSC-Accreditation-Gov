@@ -157,7 +157,7 @@ export default function Request() {
     return () => {
       dispatch(requestActions.clearSearchResult())
     }
-  }, [dispatch])
+  }, [dispatch]) //eslint-disable-line
 
   const [searchResults, setSearchResults] = useState([])
   const [tableMaxWidth, setTableMaxWidth] = useState<any>('lg')

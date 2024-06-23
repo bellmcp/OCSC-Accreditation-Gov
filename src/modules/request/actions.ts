@@ -175,7 +175,7 @@ function submitForm({
       successCallbackFunction && successCallbackFunction()
     } catch (err) {
       dispatch({ type: SUBMIT_FORM_FAILURE })
-      handleApiError(err, dispatch)
+      handleApiError(err, dispatch, 'ยื่นคำร้องไม่สำเร็จ')
     }
   }
 }
