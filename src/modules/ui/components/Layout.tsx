@@ -124,40 +124,51 @@ export default function Layout() {
           position: 'fixed',
         }}
       />
-      {!isPreviewPage && (
-        <NavBar activePage={activePage} setActivePage={setActivePage} />
-      )}
-      <Routes />
-      <Snackbar
-        open={isSnackbarOpen}
-        onClose={closeFlashMessage}
-        message={flashMessage}
-        autoHideDuration={6000}
-        action={
-          <IconButton
-            size='small'
-            aria-label='close'
-            color='inherit'
-            onClick={closeFlashMessage}
-          >
-            <CloseIcon fontSize='small' />
-          </IconButton>
-        }
+      <div
+        style={{
+          display: 'flex',
+          height: '100vh',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
       >
-        <Alert
-          onClose={closeFlashMessage}
-          severity={alertType ? alertType : 'info'}
-          elevation={6}
-          variant='filled'
-        >
-          <div
-            dangerouslySetInnerHTML={{
-              __html: flashMessage,
-            }}
-          ></div>
-        </Alert>
-      </Snackbar>
-      {!isPreviewPage && <Footer />}
+        <div>
+          {!isPreviewPage && (
+            <NavBar activePage={activePage} setActivePage={setActivePage} />
+          )}
+          <Routes />
+          <Snackbar
+            open={isSnackbarOpen}
+            onClose={closeFlashMessage}
+            message={flashMessage}
+            autoHideDuration={6000}
+            action={
+              <IconButton
+                size='small'
+                aria-label='close'
+                color='inherit'
+                onClick={closeFlashMessage}
+              >
+                <CloseIcon fontSize='small' />
+              </IconButton>
+            }
+          >
+            <Alert
+              onClose={closeFlashMessage}
+              severity={alertType ? alertType : 'info'}
+              elevation={6}
+              variant='filled'
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: flashMessage,
+                }}
+              ></div>
+            </Alert>
+          </Snackbar>
+        </div>
+        {!isPreviewPage && <Footer />}
+      </div>
     </ThemeProvider>
   )
 }
