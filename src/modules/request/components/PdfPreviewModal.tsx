@@ -1,14 +1,6 @@
 import React, { useState } from 'react'
 
-import {
-  Typography,
-  Button,
-  Grid,
-  Link,
-  Box,
-  Dialog,
-  Slide,
-} from '@material-ui/core'
+import { Typography, Button, Grid, Box, Dialog, Slide } from '@material-ui/core'
 import Stack from '@mui/material/Stack'
 import {
   SentimentVeryDissatisfied as ErrorIcon,
@@ -115,12 +107,12 @@ export default function PdfPreviewModal({ open, handleClose, filePath }: any) {
               </Box>
             </Grid>
           )}
-          <Typography variant='body2' color='textSecondary'>
+          {/* <Typography variant='body2' color='textSecondary'>
             กำลังแสดงไฟล์:{' '}
             <Link href={filePath} target='_blank'>
               {filePath}
             </Link>
-          </Typography>
+          </Typography> */}
         </Stack>
       </Dialog>
     </div>

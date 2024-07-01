@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { ExcelRenderer, OutTable } from 'react-excel-renderer'
 
-import { Typography, Button, Grid, Link, Box } from '@material-ui/core'
+import { Typography, Button, Grid, Box } from '@material-ui/core'
 import {
   SentimentVeryDissatisfied as ErrorIcon,
   Close as CloseIcon,
@@ -122,12 +122,12 @@ export default function Preview({ onClose, filePath }: any) {
           </Box>
         </Grid>
       )}
-      <Typography variant='body2' color='textSecondary'>
+      {/* <Typography variant='body2' color='textSecondary'>
         กำลังแสดงไฟล์:{' '}
         <Link href={filePath} target='_blank'>
           {filePath}
         </Link>
-      </Typography>
+      </Typography> */}
     </Stack>
   )
 }
